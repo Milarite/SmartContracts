@@ -1,6 +1,8 @@
 pragma solidity ^0.4.17;
 contract Candidates
 {
+    
+    string [] candidatesIds;
     struct candidateInformation
     {
         
@@ -29,25 +31,31 @@ contract Candidates
        mapping (string=>candidateDetails) candidateDetailsMap;
        mapping (string=>candidateTracking) candidateTrackingMap;
        
-       
+       string [] arrayNationalID;
       
     function addCandidate(string candidateIdNumber , string name,string birthOfDate, string password) public {
         
+        arrayNationalID.push(candidateIdNumber);
         candidateInformationMap[candidateIdNumber] = candidateInformation(candidateIdNumber,name,birthOfDate,password);
+    //    candidatesIds.push(candidateIdNumber);
         
         
     }
+    function getNationalID(uint index)public view returns (string)
+    {
+        return arrayNationalID[index];
+    }
     
+    function getNationalIDArrayLength() public view returns (uint)
+    {
+        return arrayNationalID.length;
+    }
     function addCandidateDetails(string candidateIdNumber,string city,string year,string phoneNumber) public{
         candidateDetailsMap[candidateIdNumber] = candidateDetails(candidateIdNumber,city,year,phoneNumber);
     }
     
     function addCandidateTracking(string candidateIdNumber,uint numberOfVotes) public{
         candidateTrackingMap[candidateIdNumber] = candidateTracking(candidateIdNumber,numberOfVotes);
-        
-        
-        
-        
         
     }
     
@@ -75,10 +83,23 @@ contract Candidates
     
     
     
- 
+   function getCandidateCity(string CandidateIdNumber) public view returns(string){
+        return candidateDetailsMap[CandidateIdNumber].city;
+    }
+    
+    
+      function getCandidateYear(string CandidateIdNumber) public view returns(string){
+        return candidateDetailsMap[CandidateIdNumber].year;
+    }
     
     
     
+      function getCandidateNumberOfVotes(string CandidateIdNumber) public view returns(uint){
+        return candidateTrackingMap[CandidateIdNumber].numberOfVotes;
+    }
+    
+    
+
     //////// end of getter
 
        
