@@ -172,6 +172,44 @@ contract MainContract  {
     
     
   // end judgment functions
+  
+    function AccountValidation(string nationalId,string password,uint flag) public view returns(bool){
+      if(flag == 1){
+      string memory prevPassword = candidate.getCandidatePassword(nationalId);
+      if(bytes(prevPassword).length > 0){
+          
+          if( keccak256(abi.encodePacked(prevPassword)) == keccak256(abi.encodePacked(password))){
+              
+              return true;
+              
+          }
+          
+         
+              
+          
+      }
+      
+      return false;
+      }
+      else {
+           string memory prevPasswordJudg = judgment.getJudgmentPassword(nationalId);
+      if(bytes(prevPasswordJudg).length > 0){
+          
+          if( keccak256(abi.encodePacked(prevPasswordJudg)) == keccak256(abi.encodePacked(password))){
+              
+              return true;
+              
+          }
+          
+         
+              
+          
+      }
+      
+      return false;
+      }
+      
+  }
     
 }
 
