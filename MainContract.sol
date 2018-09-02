@@ -97,16 +97,15 @@ contract MainContract  {
     
     
     
-      function getCandidateNumberOfVotes(string candidateIdNumber) public view returns(uint){
-          candidate.getCandidateNumberOfVotes(candidateIdNumber);
-    }
+    //   function getCandidateNumberOfVotes(string candidateIdNumber) public view returns(uint){
+    //       candidate.getCandidateNumberOfVotes(candidateIdNumber);
+    // }
     
     
 
     //////// end of getter
     
     /// end of candidate Functions
-    
     
     
     
@@ -117,8 +116,8 @@ contract MainContract  {
           
     }
     
-    function addVoterDetails (string voterIdNumber, string candidateIdNumber, string city,string year) public {
-        voters.addVoterDetails ( voterIdNumber,  candidateIdNumber,  city, year);
+    function addVoterDetails (string voterIdNumber, string city,string year) public {
+        voters.addVoterDetails ( voterIdNumber,  city, year);
     }
     
         function getNationalID(uint index)public view returns (string)
@@ -167,6 +166,7 @@ contract MainContract  {
 
            candidate.addCandidate(candidateIdNumber,name,birthOfDate,password);
         candidate.addCandidateDetails(candidateIdNumber,city,year,phoneNumber);
+        candidate.addCandidateTracking(candidateIdNumber,0);
       
     }
     

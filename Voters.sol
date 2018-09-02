@@ -14,7 +14,6 @@ contract Voters
     struct voterDetails
     {
         string voterIdNumber;
-        string candidateIdNumber;
         string city;
         string year;
     
@@ -38,8 +37,8 @@ contract Voters
         voterInfoMap[voterIdNumber] = voterInfo(voterIdNumber,name,birthOfDate,password);
     }
     
-    function addVoterDetails (string voterIdNumber, string candidateIdNumber, string city,string year) public {
-        voterDetailsMap[voterIdNumber] = voterDetails(voterIdNumber,candidateIdNumber,city,year);
+    function addVoterDetails (string voterIdNumber,  string city,string year) public {
+        voterDetailsMap[voterIdNumber] = voterDetails(voterIdNumber,city,year);
     }
     
         function getNationalID(uint index)public view returns (string)
@@ -96,7 +95,7 @@ contract Voters
     }
     
     function getCandidateByVoterDetails(string voterIdNumber)public view  returns(string)  {
-        return voterDetailsMap[voterIdNumber].candidateIdNumber;
+        return votersVotesMap[voterIdNumber].candidateIdNumber;
     }
     
     
