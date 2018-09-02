@@ -25,17 +25,9 @@ contract Judgment
         judgmentInformationMap[judgmentInformationId] = judgmentInformation(judgmentInformationId,name,birthOfDate,password);
     }
     
-    function addCandidate(string candidateIdNumber , string name,string birthOfDate, string password,string city,string year,
-    string phoneNumber) public {
-        candidates.addCandidate(candidateIdNumber,name,birthOfDate,password);
-        candidates.addCandidateDetails(candidateIdNumber,city,year,phoneNumber);
-    }
+
     
-    
-    function getCandidateNameAndCity(string candidateId) public view returns(string,string){
-        
-       return (candidates.getCandidateName(candidateId),candidates.getCandidateCity(candidateId));
-    }
+   
     
     //////// end of getter
 

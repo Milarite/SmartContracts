@@ -41,6 +41,9 @@ contract Candidates
         
         
     }
+    function getCandidatePhonenumber(string CandidateIdNumber) public view returns(string){
+        return candidateDetailsMap[CandidateIdNumber].phoneNumber;
+    }
     function getNationalID(uint index)public view returns (string)
     {
         return arrayNationalID[index];

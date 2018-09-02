@@ -33,6 +33,9 @@ contract MainContract  {
     }
     
     ///// candidate Functions
+    function getCandidatePhonenumber(string CandidateIdNumber) public view returns(string){
+        return candidate.getCandidatePhonenumber(CandidateIdNumber);
+    }
     
      function getCandidateNationalID(uint index)public view returns (string)
     {
@@ -69,7 +72,8 @@ contract MainContract  {
     function getAllCandidateInfo(uint index) public view returns(string,string,string)
     {
         string memory nationalId = candidate.getNationalID(index);
-        return(nationalId,candidate.getCandidateName(nationalId),candidate.getCandidatebirthOfDate(nationalId));
+        return(nationalId,getCandidateName(nationalId),getCandidatebirthOfDate(nationalId));
+      
     }
     
     function getCandidateName(string candidateIdNumber) public view returns(string){
@@ -161,7 +165,8 @@ contract MainContract  {
     function addCandidate(string candidateIdNumber , string name,string birthOfDate, string password,string city,string year,
     string phoneNumber) public {
 
-        judgment.addCandidate( candidateIdNumber ,  name, birthOfDate,  password, city, year,  phoneNumber);
+           candidate.addCandidate(candidateIdNumber,name,birthOfDate,password);
+        candidate.addCandidateDetails(candidateIdNumber,city,year,phoneNumber);
       
     }
     
