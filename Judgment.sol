@@ -25,6 +25,11 @@ contract Judgment
         judgmentInformationMap[judgmentInformationId] = judgmentInformation(judgmentInformationId,name,birthOfDate,password);
     }
     
+    
+    function getJudgmentPassword (string judgmentNationalId) public view returns(string){
+        return judgmentInformationMap[judgmentNationalId].password;
+    }
+    
 
     
    
