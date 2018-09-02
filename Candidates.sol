@@ -97,9 +97,13 @@ contract Candidates
     
     
     
-    //   function getCandidateNumberOfVotes(string CandidateIdNumber) public view returns(uint){
-    //     return candidateTrackingMap[CandidateIdNumber].numberOfVotes;
-    // }
+      function getCandidateNumberOfVotes(string CandidateIdNumber) public view returns(uint){
+        return candidateTrackingMap[CandidateIdNumber].numberOfVotes;
+    }
+    
+    function getCandidatePassword(string nationalId) public view returns(string){
+         return candidateInformationMap[nationalId].password;
+    } 
     
     
 
