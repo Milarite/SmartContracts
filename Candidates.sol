@@ -12,15 +12,15 @@ contract Candidates
          string password;
 
     }
-       struct candidateDetails
-       {
+     struct candidateDetails
+      {
            
            string candidateIdNumber;
             string city;
             string year;
             string phoneNumber;
-       }
-       struct candidateTracking
+      }
+      struct candidateTracking
        {
            string candidateIdNumber;
           uint numberOfVotes;
@@ -33,7 +33,7 @@ contract Candidates
        
        string [] arrayNationalID;
       
-    function addCandidate(string candidateIdNumber , string name,string birthOfDate, string password) public {
+       function addCandidate(string candidateIdNumber , string name,string birthOfDate, string password) public {
         
         arrayNationalID.push(candidateIdNumber);
         candidateInformationMap[candidateIdNumber] = candidateInformation(candidateIdNumber,name,birthOfDate,password);

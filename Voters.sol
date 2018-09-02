@@ -72,7 +72,7 @@ contract Voters
         
         votersVotesArray.push(votersVotes(voterIdNumber,candidateIdNumber));
         
-        candidate.addCandidateTracking(candidateIdNumber,candidate.getCandidateVotesNumber(candidateIdNumber) + 1);
+        candidate.addCandidateTracking(candidateIdNumber,candidate.getCandidateVotesNumber(candidateIdNumber) + 1);//get last candidate votes and add 1
         
 
     }
@@ -99,7 +99,7 @@ contract Voters
         delete (voterDetailsMap[voterIdNumber]);
     }
     
-    function getCandidateByVoterDetails(string voterIdNumber)public  returns(string)  {
+    function getCandidateByVoterDetails(string voterIdNumber)public view  returns(string)  {
         return voterDetailsMap[voterIdNumber].candidateIdNumber;
     }
     
@@ -112,5 +112,20 @@ contract Voters
       function getVoterYear(string CandidateIdNumber) public view returns(string){
         return voterDetailsMap[CandidateIdNumber].year;
     }
+    
+    function getVoterName(string voterIdNumber)  public view returns(string) {
+        return voterInfoMap[voterIdNumber].name;
+    }
+    
+    function getVoterDateOfBirth (string voterIdNumber)public view returns(string){
+        return voterInfoMap[voterIdNumber].birthOfDate;
+    }
+    
+   
+    
+    
+    
+    
+    
     
 }

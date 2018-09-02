@@ -32,62 +32,11 @@ contract Judgment
     }
     
     
-    function getCandidateName(string candidateId) public view returns(string){
+    function getCandidateNameAndCity(string candidateId) public view returns(string,string){
         
-       return candidates.getCandidateName(candidateId);
+       return (candidates.getCandidateName(candidateId),candidates.getCandidateCity(candidateId));
     }
-    
-    
-    
-    
-    
-    
-    
-   
-    
-    
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-     
-     
-       
-
-    
-       
-       
-
-    
-    
     
     //////// end of getter
 
-       
-      
-       
-  
 }
-
-
-
-
-
-
-
-
-
-
-//////
-
-
-
-
-
-
