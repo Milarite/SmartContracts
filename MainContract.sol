@@ -12,15 +12,24 @@ import "./Judgment.sol";
 
 contract MainContract  {
     
-    Candidates candidate = new Candidates();
-    Voters voters = new Voters();
-    Judgment judgment = new Judgment();
+   
+    Candidates candidate;
+    Voters voters;
+    Judgment judgment;
+    
+    constructor(Candidates _candidate , Voters _voters,Judgment _judgment) public{
+        candidate = _candidate;
+        voters = _voters;
+        judgment = _judgment;
+      }
     
     
     
     function Voting(string voterIdNumber,string  candidateIdNumber) public {
         
         voters.addVoterVotes(voterIdNumber,candidateIdNumber);
+        candidate.addCandidateTracking(candidateIdNumber,candidate.getCandidateVotesNumber(candidateIdNumber) + 1);//get last candidate votes and add 1
+
     }
     
     ///// candidate Functions
@@ -36,7 +45,7 @@ contract MainContract  {
     }
     function addCandidateDetails(string candidateIdNumber,string city,string year,string phoneNumber) public{
         candidate.addCandidateDetails(candidateIdNumber,city,year,phoneNumber);
-      
+     
     }
     
     function addCandidateTracking(string candidateIdNumber,uint numberOfVotes) public{
@@ -57,7 +66,7 @@ contract MainContract  {
     
     /////// getter values
     
-    function getAllCandidateInfo(uint index) public returns(string,string,string)
+    function getAllCandidateInfo(uint index) public view returns(string,string,string)
     {
         string memory nationalId = candidate.getNationalID(index);
         return(nationalId,candidate.getCandidateName(nationalId),candidate.getCandidatebirthOfDate(nationalId));

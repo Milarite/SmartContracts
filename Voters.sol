@@ -1,9 +1,8 @@
-pragma solidity ^0.4.21;
-import "./Candidates.sol";
+pragma solidity ^0.4.24;
+
 
 contract Voters
 {
-    Candidates candidate = new Candidates();
     struct  voterInfo 
     {
         string voterIdNumber;
@@ -60,7 +59,7 @@ contract Voters
       return "You cant vote more than 5 candidates";
       
         for (uint i = 0 ; i < votersVotesArray.length ; i++ ){
-            if(keccak256(votersVotesArray[i].candidateIdNumber) == keccak256(candidateIdNumber)){
+            if(keccak256(abi.encodePacked(votersVotesArray[i].candidateIdNumber)) == keccak256(abi.encodePacked(candidateIdNumber))){
                 
                 return "You already voted to this candidate before";
                 
@@ -72,7 +71,6 @@ contract Voters
         
         votersVotesArray.push(votersVotes(voterIdNumber,candidateIdNumber));
         
-        candidate.addCandidateTracking(candidateIdNumber,candidate.getCandidateVotesNumber(candidateIdNumber) + 1);//get last candidate votes and add 1
         
 
     }
@@ -81,7 +79,7 @@ contract Voters
         uint counter = 0;
         
         for(uint i=0 ; i<votersVotesArray.length;i++){
-            if(keccak256(votersVotesArray[i].voterIdNumber) == keccak256(voterIdNumber) )
+            if(keccak256(abi.encodePacked(votersVotesArray[i].voterIdNumber)) == keccak256(abi.encodePacked(voterIdNumber)) )
             {
                 counter++;
             }
@@ -90,9 +88,7 @@ contract Voters
         return counter;
     }
     
-    // function getCurrentVoterVotes(string voterIdNumber) public view returns(uint){
-    //     return votersVotesMap[voterIdNumber].numberOfCurrentVotes;
-    // }
+   
     
     
     function deleteVoterDetail(string voterIdNumber) public{
