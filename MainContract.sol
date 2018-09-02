@@ -6,9 +6,6 @@ import "./Judgment.sol";
 
 
 
-    
-
-
 
 contract MainContract  {
     
@@ -96,6 +93,17 @@ contract MainContract  {
     }
     
     
+      function checkCandidateIdAndPassword(string nationalId,string password) public view returns (string)
+    {
+      if(candidate.checkIdAndPassword( nationalId, password)==true)
+      {
+          return "Valid";
+      }
+      else
+      {
+          return "Invalid";
+      }
+    }
     
     //   function getCandidateNumberOfVotes(string candidateIdNumber) public view returns(uint){
     //       candidate.getCandidateNumberOfVotes(candidateIdNumber);
@@ -147,6 +155,26 @@ contract MainContract  {
         return(nationalId,voters.getVoterName(nationalId),voters.getVoterDateOfBirth(nationalId));
     }
 
+
+
+
+  function checkVotersIdAndPassword(string nationalId,string password) public view returns (string)
+    {
+    if(voters.checkIdAndPassword( nationalId, password)==true)
+      {
+          return "Valid";
+      }
+      else
+      {
+          return "Invalid";
+      }
+    }
+    
+    
+    
+
+    
+    
         //// end of voters functions    
 
     
@@ -170,46 +198,51 @@ contract MainContract  {
       
     }
     
+    function checkJudgmentIdAndPassword(string nationalId,string password) public view returns (string)
+    {
+    if(judgment.checkIdAndPassword( nationalId, password)==true)
+      {
+          return "Valid";
+      }
+      else
+      {
+          return "Invalid";
+      }
+    }
     
   // end judgment functions
   
-    function AccountValidation(string nationalId,string password,uint flag) public view returns(bool){
-      if(flag == 1){
-      string memory prevPassword = candidate.getCandidatePassword(nationalId);
-      if(bytes(prevPassword).length > 0){
+  
+  
+    // function AccountValidation(string nationalId,string password,uint flag) public view returns(bool){
+    //   if(flag == 1){
+    //   string memory prevPassword = candidate.getCandidatePassword(nationalId);
+    //   if(bytes(prevPassword).length > 0){
           
-          if( keccak256(abi.encodePacked(prevPassword)) == keccak256(abi.encodePacked(password))){
-              
-              return true;
-              
-          }
-          
-         
-              
-          
-      }
+    //       if( keccak256(abi.encodePacked(prevPassword)) == keccak256(abi.encodePacked(password))){
+    
+    //           return true;
+    //       }
+    //   }
       
-      return false;
-      }
-      else {
-           string memory prevPasswordJudg = judgment.getJudgmentPassword(nationalId);
-      if(bytes(prevPasswordJudg).length > 0){
+    //   return false;
+    //   }
+    //   else {
+    //       string memory prevPasswordJudg = judgment.getJudgmentPassword(nationalId);
+    //   if(bytes(prevPasswordJudg).length > 0){
           
-          if( keccak256(abi.encodePacked(prevPasswordJudg)) == keccak256(abi.encodePacked(password))){
+    //       if( keccak256(abi.encodePacked(prevPasswordJudg)) == keccak256(abi.encodePacked(password))){
               
-              return true;
+    //           return true;
               
-          }
-          
-         
-              
-          
-      }
+    //       }
+
+    //   }
       
-      return false;
-      }
+    //   return false;
+    //   }
       
   }
     
-}
+
 

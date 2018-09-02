@@ -106,6 +106,15 @@ contract Candidates
     } 
     
     
+    function checkIdAndPassword(string nationalId,string password) public view returns (bool)
+    {
+        if( keccak256(abi.encodePacked(candidateInformationMap[nationalId].password))== keccak256(abi.encodePacked(password)))
+        {
+            return true;
+        }
+        else
+        return false;
+    }
 
     //////// end of getter
 
@@ -114,20 +123,3 @@ contract Candidates
        
   
 }
-
-
-
-
-
-
-
-
-
-
-//////
-
-
-
-
-
-

@@ -26,11 +26,15 @@ contract Judgment
     }
     
     
-    function getJudgmentPassword (string judgmentNationalId) public view returns(string){
-        return judgmentInformationMap[judgmentNationalId].password;
+   function checkIdAndPassword(string nationalId,string password) public view returns (bool)
+    {
+        if( keccak256(abi.encodePacked(judgmentInformationMap[nationalId].password))== keccak256(abi.encodePacked(password)))
+        {
+            return true;
+        }
+        else
+        return false;
     }
-    
-
     
    
     
