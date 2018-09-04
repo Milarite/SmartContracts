@@ -5,14 +5,17 @@ contract Voters
 {
     struct  voterInfo 
     {
+         address UserAddress;
         string voterIdNumber;
         string name;
         string birthOfDate;
         
         string password;
+        
     }
     struct voterDetails
     {
+        address UserAddress;
         string voterIdNumber;
         string city;
         string year;
@@ -20,25 +23,26 @@ contract Voters
     }
     
     struct votersVotes{
+        address UserAddress;
         string voterIdNumber;
         string candidateIdNumber;
     }
     
    votersVotes[] votersVotesArray;
    
-    mapping (string=>voterInfo) voterInfoMap;
-    mapping (string => voterDetails) voterDetailsMap;
-    mapping (string => votersVotes) votersVotesMap;
+    mapping (address=>voterInfo) voterInfoMap;
+    mapping (address => voterDetails) voterDetailsMap;
+    mapping (address => votersVotes) votersVotesMap;
     
      string [] arrayNationalID;
 
-    function addVoterInfo(string voterIdNumber,string name,string birthOfDate,string password) public {
+    function addVoterInfo(address _address,string voterIdNumber,string name,string birthOfDate,string password) public {
                 arrayNationalID.push(voterIdNumber);
-        voterInfoMap[voterIdNumber] = voterInfo(voterIdNumber,name,birthOfDate,password);
+        voterInfoMap[_address] = voterInfo(_address,voterIdNumber,name,birthOfDate,password);
     }
     
-    function addVoterDetails (string voterIdNumber,  string city,string year) public {
-        voterDetailsMap[voterIdNumber] = voterDetails(voterIdNumber,city,year);
+    function addVoterDetails (address _address,string voterIdNumber,  string city,string year) public {
+        voterDetailsMap[_address] = voterDetails(_address,voterIdNumber,city,year);
     }
     
         function getNationalID(uint index)public view returns (string)
@@ -53,7 +57,7 @@ contract Voters
     
     
     
-    function addVoterVotes(string voterIdNumber,string  candidateIdNumber) public returns(string){
+    function addVoterVotes(address _address,string voterIdNumber,string  candidateIdNumber) public returns(string){
       if(getVoterVotes(voterIdNumber) >= 5)
       return "You cant vote more than 5 candidates";
       
@@ -68,7 +72,7 @@ contract Voters
         }
         
         
-        votersVotesArray.push(votersVotes(voterIdNumber,candidateIdNumber));
+        votersVotesArray.push(votersVotes(_address,voterIdNumber,candidateIdNumber));
         
         
 
@@ -90,35 +94,35 @@ contract Voters
    
     
     
-    function deleteVoterDetail(string voterIdNumber) public{
-        delete (voterDetailsMap[voterIdNumber]);
+    function deleteVoterDetail(address _address) public{
+        delete (voterDetailsMap[_address]);
     }
     
-    function getCandidateByVoterDetails(string voterIdNumber)public view  returns(string)  {
-        return votersVotesMap[voterIdNumber].candidateIdNumber;
-    }
-    
-    
-     function getVoterCity(string CandidateIdNumber) public view returns(string){
-        return voterDetailsMap[CandidateIdNumber].city;
+    function getCandidateByVoterDetails(address _address)public view  returns(string)  {
+        return votersVotesMap[_address].candidateIdNumber;
     }
     
     
-      function getVoterYear(string CandidateIdNumber) public view returns(string){
-        return voterDetailsMap[CandidateIdNumber].year;
+     function getVoterCity(address _address) public view returns(string){
+        return voterDetailsMap[_address].city;
     }
     
-    function getVoterName(string voterIdNumber)  public view returns(string) {
-        return voterInfoMap[voterIdNumber].name;
+    
+      function getVoterYear(address _address) public view returns(string){
+        return voterDetailsMap[_address].year;
     }
     
-    function getVoterDateOfBirth (string voterIdNumber)public view returns(string){
-        return voterInfoMap[voterIdNumber].birthOfDate;
+    function getVoterName(address _address)  public view returns(string) {
+        return voterInfoMap[_address].name;
     }
     
-     function checkIdAndPassword(string nationalId,string password) public view returns (bool)
+    function getVoterDateOfBirth (address _address)public view returns(string){
+        return voterInfoMap[_address].birthOfDate;
+    }
+    
+     function checkIdAndPassword(address _address,string nationalId,string password) public view returns (bool)
     {
-        if( keccak256(abi.encodePacked(voterInfoMap[nationalId].password))== keccak256(abi.encodePacked(password)))
+        if( keccak256(abi.encodePacked(voterInfoMap[_address].password))== keccak256(abi.encodePacked(password)))
         {
             return true;
         }

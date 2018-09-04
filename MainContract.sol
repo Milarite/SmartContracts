@@ -22,16 +22,16 @@ contract MainContract  {
     
     
     
-    function Voting(string voterIdNumber,string  candidateIdNumber) public {
+    function Voting(address _address,string voterIdNumber,string  candidateIdNumber) public {
         
-        voters.addVoterVotes(voterIdNumber,candidateIdNumber);
-        candidate.addCandidateTracking(candidateIdNumber,candidate.getCandidateVotesNumber(candidateIdNumber) + 1);//get last candidate votes and add 1
+        voters.addVoterVotes(_address,voterIdNumber,candidateIdNumber);
+        candidate.addCandidateTracking(_address,candidateIdNumber,candidate.getCandidateVotesNumber(_address) + 1);//get last candidate votes and add 1
 
     }
     
     ///// candidate Functions
-    function getCandidatePhonenumber(string CandidateIdNumber) public view returns(string){
-        return candidate.getCandidatePhonenumber(CandidateIdNumber);
+    function getCandidatePhonenumber(address _address,string CandidateIdNumber) public view returns(string){
+        return candidate.getCandidatePhonenumber(_address);
     }
     
      function getCandidateNationalID(uint index)public view returns (string)
@@ -43,13 +43,13 @@ contract MainContract  {
     {
         return candidate.getNationalIDArrayLength();
     }
-    function addCandidateDetails(string candidateIdNumber,string city,string year,string phoneNumber) public{
-        candidate.addCandidateDetails(candidateIdNumber,city,year,phoneNumber);
+    function addCandidateDetails(address _address,string candidateIdNumber,string city,string year,string phoneNumber) public{
+        candidate.addCandidateDetails( _address,candidateIdNumber,city,year,phoneNumber);
      
     }
     
-    function addCandidateTracking(string candidateIdNumber,uint numberOfVotes) public{
-        candidate.addCandidateTracking(candidateIdNumber,numberOfVotes);
+    function addCandidateTracking(address _address,string candidateIdNumber,uint numberOfVotes) public{
+        candidate.addCandidateTracking(_address,candidateIdNumber,numberOfVotes);
         
         
     }
@@ -58,52 +58,41 @@ contract MainContract  {
     
     
     
-    function getCandidateVotesNumber(string candidateIdNumber) public view returns(uint){
-        return candidate.getCandidateVotesNumber(candidateIdNumber);
+    function getCandidateVotesNumber(address _address,string candidateIdNumber) public view returns(uint){
+        return candidate.getCandidateVotesNumber(_address);
     }
     
     
     
     /////// getter values
     
-    function getAllCandidateInfo(uint index) public view returns(string,string,string)
-    {
-        string memory nationalId = candidate.getNationalID(index);
-        return(nationalId,getCandidateName(nationalId),getCandidatebirthOfDate(nationalId));
+    // function getAllCandidateInfo(address _address,uint index) public view returns(string,string)
+    // {
+    //   // string memory nationalId = candidate.getNationalID(index);
+    //     return(getCandidateName(_address),getCandidatebirthOfDate(_address));
       
+    // }
+    
+    function getCandidateName( address _address) public view returns(string){
+        return candidate.getCandidateName(_address);
     }
     
-    function getCandidateName(string candidateIdNumber) public view returns(string){
-        return candidate.getCandidateName(candidateIdNumber);
-    }
-    
-    function getCandidatebirthOfDate(string candidateIdNumber) public view returns(string){
-        return candidate.getCandidatebirthOfDate(candidateIdNumber);
-    }
-    
-    
-    
-   function getCandidateCity(string candidateIdNumber) public view returns(string){
-       return candidate.getCandidateCity(candidateIdNumber);
+    function getCandidatebirthOfDate(address _address) public view returns(string){
+        return candidate.getCandidatebirthOfDate(_address);
     }
     
     
-      function getCandidateYear(string candidateIdNumber) public view returns(string){
-          return candidate.getCandidateYear(candidateIdNumber);
+    
+   function getCandidateCity(address _address) public view returns(string){
+       return candidate.getCandidateCity(_address);
     }
     
     
-      function checkCandidateIdAndPassword(string nationalId,string password) public view returns (string)
-    {
-      if(candidate.checkIdAndPassword( nationalId, password)==true)
-      {
-          return "Valid";
-      }
-      else
-      {
-          return "Invalid";
-      }
+      function getCandidateYear(address _address) public view returns(string){
+          return candidate.getCandidateYear(_address);
     }
+    
+    
     
     //   function getCandidateNumberOfVotes(string candidateIdNumber) public view returns(uint){
     //       candidate.getCandidateNumberOfVotes(candidateIdNumber);
@@ -119,13 +108,13 @@ contract MainContract  {
     
     //// voters functions 
     
-    function addVoterInfo(string voterIdNumber,string name,string birthOfDate,string password) public {
-        voters.addVoterInfo( voterIdNumber, name, birthOfDate, password);
+    function addVoterInfo(address _address,string voterIdNumber,string name,string birthOfDate,string password) public {
+        voters.addVoterInfo(_address, voterIdNumber, name, birthOfDate, password);
           
     }
     
-    function addVoterDetails (string voterIdNumber, string city,string year) public {
-        voters.addVoterDetails ( voterIdNumber,  city, year);
+    function addVoterDetails (address _address,string voterIdNumber, string city,string year) public {
+        voters.addVoterDetails (_address, voterIdNumber,  city, year);
     }
     
         function getNationalID(uint index)public view returns (string)
@@ -140,9 +129,9 @@ contract MainContract  {
     
     
     
-    function addVoterVotes(string voterIdNumber,string  candidateIdNumber) public returns(string){
+    function addVoterVotes(address _address,string voterIdNumber,string  candidateIdNumber) public returns(string){
         
-        voters.addVoterVotes( voterIdNumber,  candidateIdNumber);
+        voters.addVoterVotes( _address,voterIdNumber,  candidateIdNumber);
     }
     
     function getVoterVotes(string voterIdNumber) public view returns(uint){
@@ -150,25 +139,14 @@ contract MainContract  {
         voters.getVoterVotes( voterIdNumber);
     }
     
-     function getVotersInfo(uint index) public view returns(string,string,string){
-        string memory nationalId = voters.getNationalID(index);
-        return(nationalId,voters.getVoterName(nationalId),voters.getVoterDateOfBirth(nationalId));
-    }
+    //  function getVotersInfo(uint index) public view returns(string,string){
+    //     //string memory nationalId = voters.getNationalID(index);
+    //     return(voters.getVoterName(_address),voters.getVoterDateOfBirth(_address));
+    // }
 
 
 
 
-  function checkVotersIdAndPassword(string nationalId,string password) public view returns (string)
-    {
-    if(voters.checkIdAndPassword( nationalId, password)==true)
-      {
-          return "Valid";
-      }
-      else
-      {
-          return "Invalid";
-      }
-    }
     
     
     
@@ -189,60 +167,19 @@ contract MainContract  {
         judgment.addJudgmentInformation ( judgmentInformationId, name, birthOfDate, password);
     }
     
-    function addCandidate(string candidateIdNumber , string name,string birthOfDate, string password,string city,string year,
+    function addCandidate(address _address,string candidateIdNumber , string name,string birthOfDate, string password,string city,string year,
     string phoneNumber) public {
 
-           candidate.addCandidate(candidateIdNumber,name,birthOfDate,password);
-        candidate.addCandidateDetails(candidateIdNumber,city,year,phoneNumber);
-        candidate.addCandidateTracking(candidateIdNumber,0);
+           candidate.addCandidate(_address,candidateIdNumber,name,birthOfDate,password);
+        candidate.addCandidateDetails(_address,candidateIdNumber,city,year,phoneNumber);
+        candidate.addCandidateTracking(_address,candidateIdNumber,0);
       
     }
     
-    function checkJudgmentIdAndPassword(string nationalId,string password) public view returns (string)
-    {
-    if(judgment.checkIdAndPassword( nationalId, password)==true)
-      {
-          return "Valid";
-      }
-      else
-      {
-          return "Invalid";
-      }
-    }
     
-  // end judgment functions
-  
-  
-  
-    // function AccountValidation(string nationalId,string password,uint flag) public view returns(bool){
-    //   if(flag == 1){
-    //   string memory prevPassword = candidate.getCandidatePassword(nationalId);
-    //   if(bytes(prevPassword).length > 0){
-          
-    //       if( keccak256(abi.encodePacked(prevPassword)) == keccak256(abi.encodePacked(password))){
     
-    //           return true;
-    //       }
-    //   }
-      
-    //   return false;
-    //   }
-    //   else {
-    //       string memory prevPasswordJudg = judgment.getJudgmentPassword(nationalId);
-    //   if(bytes(prevPasswordJudg).length > 0){
-          
-    //       if( keccak256(abi.encodePacked(prevPasswordJudg)) == keccak256(abi.encodePacked(password))){
-              
-    //           return true;
-              
-    //       }
-
-    //   }
-      
-    //   return false;
-    //   }
-      
-  }
+}
+  
     
 
 

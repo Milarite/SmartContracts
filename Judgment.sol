@@ -7,6 +7,8 @@ contract Judgment
     
     struct judgmentInformation
     {
+        
+        
          string judgmentIdNumber;
          string name;
          string birthOfDate;
