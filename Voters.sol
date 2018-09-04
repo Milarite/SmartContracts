@@ -24,8 +24,8 @@ contract Voters
     
     struct votersVotes{
         address UserAddress;
-        string voterIdNumber;
-        string candidateIdNumber;
+      //  string voterIdNumber;
+        address candidateIdNumber;
     }
     
    votersVotes[] votersVotesArray;
@@ -57,12 +57,12 @@ contract Voters
     
     
     
-    function addVoterVotes(address _address,string voterIdNumber,string  candidateIdNumber) public returns(string){
-      if(getVoterVotes(voterIdNumber) >= 5)
+    function addVoterVotes(address voterAddress,address candidateAddress) public returns(string){
+      if(getVoterVotes(voterAddress) >= 5)
       return "You cant vote more than 5 candidates";
       
         for (uint i = 0 ; i < votersVotesArray.length ; i++ ){
-            if(keccak256(abi.encodePacked(votersVotesArray[i].candidateIdNumber)) == keccak256(abi.encodePacked(candidateIdNumber))){
+            if(keccak256(abi.encodePacked(votersVotesArray[i].UserAddress)) == keccak256(abi.encodePacked(voterAddress))){
                 
                 return "You already voted to this candidate before";
                 
@@ -72,17 +72,17 @@ contract Voters
         }
         
         
-        votersVotesArray.push(votersVotes(_address,voterIdNumber,candidateIdNumber));
+        votersVotesArray.push(votersVotes(voterAddress,candidateAddress));
         
         
 
     }
     
-    function getVoterVotes(string voterIdNumber) public view returns(uint){
+    function getVoterVotes(address _address) public view returns(uint){
         uint counter = 0;
         
         for(uint i=0 ; i<votersVotesArray.length;i++){
-            if(keccak256(abi.encodePacked(votersVotesArray[i].voterIdNumber)) == keccak256(abi.encodePacked(voterIdNumber)) )
+            if(keccak256(abi.encodePacked(votersVotesArray[i].UserAddress)) == keccak256(abi.encodePacked(_address)) )
             {
                 counter++;
             }
@@ -98,9 +98,9 @@ contract Voters
         delete (voterDetailsMap[_address]);
     }
     
-    function getCandidateByVoterDetails(address _address)public view  returns(string)  {
-        return votersVotesMap[_address].candidateIdNumber;
-    }
+    // function getCandidateByVoterDetails(address _address)public view  returns(string)  {
+    //     return votersVotesMap[_address].candidateIdNumber;
+    // }
     
     
      function getVoterCity(address _address) public view returns(string){
@@ -120,7 +120,7 @@ contract Voters
         return voterInfoMap[_address].birthOfDate;
     }
     
-     function checkIdAndPassword(address _address,string nationalId,string password) public view returns (bool)
+     function checkIdAndPassword(address _address,string password) public view returns (bool)
     {
         if( keccak256(abi.encodePacked(voterInfoMap[_address].password))== keccak256(abi.encodePacked(password)))
         {

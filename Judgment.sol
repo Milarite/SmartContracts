@@ -8,7 +8,7 @@ contract Judgment
     struct judgmentInformation
     {
         
-        
+        address _address;
          string judgmentIdNumber;
          string name;
          string birthOfDate;
@@ -19,18 +19,18 @@ contract Judgment
     
     
     
-    mapping (string=>judgmentInformation) judgmentInformationMap;
+    mapping (address=>judgmentInformation) judgmentInformationMap;
     
     
-    function addJudgmentInformation (string judgmentInformationId,string name,string birthOfDate,string password) public {
+    function addJudgmentInformation (address _address,string judgmentInformationId,string name,string birthOfDate,string password) public {
         
-        judgmentInformationMap[judgmentInformationId] = judgmentInformation(judgmentInformationId,name,birthOfDate,password);
+        judgmentInformationMap[_address] = judgmentInformation(_address,judgmentInformationId,name,birthOfDate,password);
     }
     
     
-   function checkIdAndPassword(string nationalId,string password) public view returns (bool)
+   function checkIdAndPassword(address _address,string password) public view returns (bool)
     {
-        if( keccak256(abi.encodePacked(judgmentInformationMap[nationalId].password))== keccak256(abi.encodePacked(password)))
+        if( keccak256(abi.encodePacked(judgmentInformationMap[_address].password))== keccak256(abi.encodePacked(password)))
         {
             return true;
         }

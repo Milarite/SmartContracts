@@ -22,12 +22,7 @@ contract MainContract  {
     
     
     
-    function Voting(address _address,string voterIdNumber,string  candidateIdNumber) public {
-        
-        voters.addVoterVotes(_address,voterIdNumber,candidateIdNumber);
-        candidate.addCandidateTracking(_address,candidateIdNumber,candidate.getCandidateVotesNumber(_address) + 1);//get last candidate votes and add 1
-
-    }
+ 
     
     ///// candidate Functions
     function getCandidatePhonenumber(address _address) public view returns(string){
@@ -48,8 +43,8 @@ contract MainContract  {
      
     }
     
-    function addCandidateTracking(address _address,string candidateIdNumber,uint numberOfVotes) public{
-        candidate.addCandidateTracking(_address,candidateIdNumber,numberOfVotes);
+    function addCandidateTracking(address _address,uint numberOfVotes) public{
+        candidate.addCandidateTracking(_address,numberOfVotes);
         
         
     }
@@ -128,15 +123,21 @@ contract MainContract  {
     }
     
     
-    
-    function addVoterVotes(address _address,string voterIdNumber,string  candidateIdNumber) public returns(string){
+       function Voting(address voterAddress,address CandidateAddress) public {
         
-        voters.addVoterVotes( _address,voterIdNumber,  candidateIdNumber);
+        voters.addVoterVotes(voterAddress,CandidateAddress);
+        candidate.addCandidateTracking(CandidateAddress,candidate.getCandidateVotesNumber(CandidateAddress) + 1);//get last candidate votes and add 1
+
     }
     
-    function getVoterVotes(string voterIdNumber) public view returns(uint){
+    // function addVoterVotes(address _address,string voterIdNumber,string  candidateIdNumber) public returns(string){
+        
+    //     voters.addVoterVotes( _address,voterIdNumber,  candidateIdNumber);
+    // }
     
-        voters.getVoterVotes( voterIdNumber);
+    function getVoterVotes(address _address) public view returns(uint){
+    
+        voters.getVoterVotes(_address);
     }
     
     //  function getVotersInfo(uint index) public view returns(string,string){
@@ -162,9 +163,9 @@ contract MainContract  {
     
     
     
-    function addJudgmentInformation (string judgmentInformationId,string name,string birthOfDate,string password) public {
+    function addJudgmentInformation (address _address,string judgmentInformationId,string name,string birthOfDate,string password) public {
         
-        judgment.addJudgmentInformation ( judgmentInformationId, name, birthOfDate, password);
+        judgment.addJudgmentInformation ( _address,judgmentInformationId, name, birthOfDate, password);
     }
     
     function addCandidate(address _address,string candidateIdNumber , string name,string birthOfDate, string password,string city,string year,
@@ -172,7 +173,7 @@ contract MainContract  {
 
            candidate.addCandidate(_address,candidateIdNumber,name,birthOfDate,password);
         candidate.addCandidateDetails(_address,candidateIdNumber,city,year,phoneNumber);
-        candidate.addCandidateTracking(_address,candidateIdNumber,0);
+        candidate.addCandidateTracking(_address,0);
       
     }
     

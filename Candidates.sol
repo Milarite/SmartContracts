@@ -24,7 +24,7 @@ contract Candidates
       struct candidateTracking
        {
            address UserAddress;
-           string candidateIdNumber;
+       //    string candidateIdNumber;
           uint numberOfVotes;
        }
        
@@ -59,8 +59,8 @@ contract Candidates
         candidateDetailsMap[_address] = candidateDetails(_address,candidateIdNumber,city,year,phoneNumber);
     }
     
-    function addCandidateTracking(address _address,string candidateIdNumber,uint numberOfVotes) public{
-        candidateTrackingMap[_address] = candidateTracking(_address,candidateIdNumber,numberOfVotes);
+    function addCandidateTracking(address _address,uint numberOfVotes) public{
+        candidateTrackingMap[_address] = candidateTracking(_address,numberOfVotes);
         
     }
     
@@ -108,7 +108,7 @@ contract Candidates
     } 
     
     
-    function checkIdAndPassword(address _address,string nationalId,string password) public view returns (bool)
+    function checkIdAndPassword(address _address,string password) public view returns (bool)
     {
         if( keccak256(abi.encodePacked(candidateInformationMap[_address].password))== keccak256(abi.encodePacked(password)))
         {
