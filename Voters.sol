@@ -23,21 +23,23 @@ contract Voters
     }
     
     struct votersVotes{
-        address UserAddress;
+        address voterAddress;
       //  string voterIdNumber;
-        address candidateIdNumber;
+        address candidateAddress;
     }
     
    votersVotes[] votersVotesArray;
+   
+   mapping(address => votersVotes[]) mapVotersVotes;
    
     mapping (address=>voterInfo) voterInfoMap;
     mapping (address => voterDetails) voterDetailsMap;
     mapping (address => votersVotes) votersVotesMap;
     
-     string [] arrayNationalID;
+     address [] arrayNationalID;
 
     function addVoterInfo(address _address,string voterIdNumber,string name,string birthOfDate,string password) public {
-                arrayNationalID.push(voterIdNumber);
+                arrayNationalID.push(_address);
         voterInfoMap[_address] = voterInfo(_address,voterIdNumber,name,birthOfDate,password);
     }
     
@@ -45,7 +47,7 @@ contract Voters
         voterDetailsMap[_address] = voterDetails(_address,voterIdNumber,city,year);
     }
     
-        function getNationalID(uint index)public view returns (string)
+        function getNationalID(uint index)public view returns (address)
     {
         return arrayNationalID[index];
     }
@@ -55,43 +57,29 @@ contract Voters
         return arrayNationalID.length;
     }
     
-    
-    
-    function addVoterVotes(address voterAddress,address candidateAddress) public returns(string){
-      if(getVoterVotes(voterAddress) >= 5)
-      return "You cant vote more than 5 candidates";
-      
-        for (uint i = 0 ; i < votersVotesArray.length ; i++ ){
-            if(keccak256(abi.encodePacked(votersVotesArray[i].UserAddress)) == keccak256(abi.encodePacked(voterAddress))){
-                
-                return "You already voted to this candidate before";
-                
-            }
-            
-            
-        }
-        
-        
-        votersVotesArray.push(votersVotes(voterAddress,candidateAddress));
-        
-        
 
-    }
     
-    function getVoterVotes(address _address) public view returns(uint){
-        uint counter = 0;
+    function addVoterVotes(address voterAddress,address candidateAddress) public view returns (string) {
         
-        for(uint i=0 ; i<votersVotesArray.length;i++){
-            if(keccak256(abi.encodePacked(votersVotesArray[i].UserAddress)) == keccak256(abi.encodePacked(_address)) )
-            {
-                counter++;
-            }
+              if(getNumberOfVotes(voterAddress) >= 5)
+                    return "You cant vote more than 5 candidates";
+                
+             for (uint i = 0 ; i < mapVotersVotes[voterAddress].length ; i++ ){
+            if(keccak256(abi.encodePacked(mapVotersVotes[voterAddress][i].candidateAddress)) == keccak256(abi.encodePacked(candidateAddress)))
+                return "You already voted to this candidate before";
+       
         }
-        
-        return counter;
+        mapVotersVotes[voterAddress].push(votersVotes(voterAddress,candidateAddress));
+        return "Done";
     }
     
+
    
+   function getNumberOfVotes(address _address)public view returns(uint)
+   {
+      
+         return   mapVotersVotes[_address].length;
+   }
     
     
     function deleteVoterDetail(address _address) public{

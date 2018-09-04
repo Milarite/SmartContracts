@@ -112,7 +112,7 @@ contract MainContract  {
         voters.addVoterDetails (_address, voterIdNumber,  city, year);
     }
     
-        function getNationalID(uint index)public view returns (string)
+        function getNationalID(uint index)public view returns (address)
     {
          return   voters.getNationalID(index);
     }
@@ -135,9 +135,9 @@ contract MainContract  {
     //     voters.addVoterVotes( _address,voterIdNumber,  candidateIdNumber);
     // }
     
-    function getVoterVotes(address _address) public view returns(uint){
+    function getNumberOfVotes(address _address) public view returns(uint){
     
-        voters.getVoterVotes(_address);
+        voters.getNumberOfVotes(_address);
     }
     
     //  function getVotersInfo(uint index) public view returns(string,string){
@@ -148,6 +148,38 @@ contract MainContract  {
 
 
 
+    
+    
+    
+        
+    function deleteVoterDetail(address _address) public{
+        voters.deleteVoterDetail(_address);
+        
+    }
+    
+    // function getCandidateByVoterDetails(address _address)public view  returns(string)  {
+    //     return votersVotesMap[_address].candidateIdNumber;
+    // }
+    
+    
+     function getVoterCity(address _address) public view returns(string){
+        voters.getVoterCity(_address);
+    }
+    
+    
+      function getVoterYear(address _address) public view returns(string){
+        voters.getVoterYear(_address);
+    }
+    
+    function getVoterName(address _address)  public view returns(string) {
+        voters.getVoterName(_address);
+    }
+    
+    function getVoterDateOfBirth (address _address)public view returns(string){
+        voters.getVoterDateOfBirth(_address);
+    }
+    
+    
     
     
     

@@ -17,11 +17,7 @@ contract Judgment
 
     }
     
-    
-    
     mapping (address=>judgmentInformation) judgmentInformationMap;
-    
-    
     function addJudgmentInformation (address _address,string judgmentInformationId,string name,string birthOfDate,string password) public {
         
         judgmentInformationMap[_address] = judgmentInformation(_address,judgmentInformationId,name,birthOfDate,password);
