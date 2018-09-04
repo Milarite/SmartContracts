@@ -1,9 +1,8 @@
 pragma solidity ^0.4.17;
-import "./Candidates.sol";
+
 contract Judgment
 {
     
-    Candidates candidates = new Candidates();
     
     struct judgmentInformation
     {
