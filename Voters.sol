@@ -47,18 +47,17 @@ contract Voters
         voterDetailsMap[_address] = voterDetails(_address,voterIdNumber,city,year);
     }
     
-        function getNationalID(uint index)public view returns (address)
+        function getVotedCandidatesAddress(address voterAddress,uint idex)public view returns (address)
     {
-        return arrayNationalID[index];
+        return mapVotersVotes[voterAddress][idex].candidateAddress;
     }
     
-    function getNationalIDArrayLength() public view returns (uint)
+    function getNationalIDArrayLength(address voterAddress) public view returns (uint)
     {
-        return arrayNationalID.length;
+        return mapVotersVotes[voterAddress].length;
     }
     
 
-    
     function addVoterVotes(address voterAddress,address candidateAddress) public view returns (string) {
         
               if(getNumberOfVotes(voterAddress) >= 5)

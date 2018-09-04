@@ -5,8 +5,6 @@ import "./Voters.sol";
 import "./Judgment.sol";
 
 
-
-
 contract MainContract  {
     
    
@@ -112,14 +110,14 @@ contract MainContract  {
         voters.addVoterDetails (_address, voterIdNumber,  city, year);
     }
     
-        function getNationalID(uint index)public view returns (address)
+        function getVotedCandidatesAddress(address voterAddress,uint index)public view returns (address)
     {
-         return   voters.getNationalID(index);
+         return   voters.getVotedCandidatesAddress(voterAddress,index);
     }
     
-    function getVotersNationalIDArrayLength() public view returns (uint)
+    function getNationalIDArrayLength(address voterAddress) public view returns (uint)
     {
-        return voters.getNationalIDArrayLength();
+        return voters.getNationalIDArrayLength(voterAddress);
     }
     
     

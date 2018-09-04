@@ -34,8 +34,7 @@ contract Judgment
         return false;
     }
     
-   
-    
+
     //////// end of getter
 
 }
