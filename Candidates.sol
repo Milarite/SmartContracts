@@ -1,56 +1,66 @@
-pragma solidity ^0.4.24;
-
-import "./Candidates.sol";
-import "./Voters.sol";
-import "./Judgment.sol";
-
-
-
-
-contract MainContract  {
+pragma solidity ^0.4.17;
+contract Candidates
+{
     
-   
-    Candidates candidate;
-    Voters voters;
-    Judgment judgment;
-    
-    constructor(Candidates _candidate , Voters _voters,Judgment _judgment) public{
-        candidate = _candidate;
-        voters = _voters;
-        judgment = _judgment;
+    string [] candidatesIds;
+    struct candidateInformation
+    {
+        address UserAddress;
+         string candidateIdNumber;
+         string name;
+         string birthOfDate;
+         string password;
+
+    }
+     struct candidateDetails
+      {
+           
+           address UserAddress;
+           string candidateIdNumber;
+            string city;
+            string year;
+            string phoneNumber;
       }
-    
-    
-    
-    function Voting(address _address,string voterIdNumber,string  candidateIdNumber) public {
+      struct candidateTracking
+       {
+           address UserAddress;
+           string candidateIdNumber;
+          uint numberOfVotes;
+       }
+       
+       mapping (address =>candidateInformation ) candidateInformationMap;
+       
+       mapping (address=>candidateDetails) candidateDetailsMap;
+       mapping (address=>candidateTracking) candidateTrackingMap;
+       
+       string [] arrayNationalID;
+      
+       function addCandidate(address _address,string candidateIdNumber , string name,string birthOfDate, string password) public {
         
-        voters.addVoterVotes(_address,voterIdNumber,candidateIdNumber);
-        candidate.addCandidateTracking(_address,candidateIdNumber,candidate.getCandidateVotesNumber(_address) + 1);//get last candidate votes and add 1
-
+        arrayNationalID.push(candidateIdNumber);
+        candidateInformationMap[_address] = candidateInformation(_address,candidateIdNumber,name,birthOfDate,password);
+    //    candidatesIds.push(candidateIdNumber);
+        
+        
     }
-    
-    ///// candidate Functions
-    function getCandidatePhonenumber(address _address,string CandidateIdNumber) public view returns(string){
-        return candidate.getCandidatePhonenumber(_address);
+    function getCandidatePhonenumber(address _address) public view returns(string){
+        return candidateDetailsMap[_address].phoneNumber;
     }
-    
-     function getCandidateNationalID(uint index)public view returns (string)
+    function getNationalID(uint index)public view returns (string)
     {
-       return candidate.getNationalID(index);
+        return arrayNationalID[index];
     }
     
-    function getCandidateNationalIDArrayLength() public view returns (uint)
+    function getNationalIDArrayLength() public view returns (uint)
     {
-        return candidate.getNationalIDArrayLength();
+        return arrayNationalID.length;
     }
     function addCandidateDetails(address _address,string candidateIdNumber,string city,string year,string phoneNumber) public{
-        candidate.addCandidateDetails( _address,candidateIdNumber,city,year,phoneNumber);
-     
+        candidateDetailsMap[_address] = candidateDetails(_address,candidateIdNumber,city,year,phoneNumber);
     }
     
     function addCandidateTracking(address _address,string candidateIdNumber,uint numberOfVotes) public{
-        candidate.addCandidateTracking(_address,candidateIdNumber,numberOfVotes);
-        
+        candidateTrackingMap[_address] = candidateTracking(_address,candidateIdNumber,numberOfVotes);
         
     }
     
@@ -58,128 +68,60 @@ contract MainContract  {
     
     
     
-    function getCandidateVotesNumber(address _address,string candidateIdNumber) public view returns(uint){
-        return candidate.getCandidateVotesNumber(_address);
+    function getCandidateVotesNumber(address _address) public view returns(uint){
+        return candidateTrackingMap[_address].numberOfVotes;
     }
     
     
     
     /////// getter values
     
-    // function getAllCandidateInfo(address _address,uint index) public view returns(string,string)
-    // {
-    //   // string memory nationalId = candidate.getNationalID(index);
-    //     return(getCandidateName(_address),getCandidatebirthOfDate(_address));
-      
-    // }
     
-    function getCandidateName( address _address) public view returns(string){
-        return candidate.getCandidateName(_address);
+    
+    function getCandidateName(address _address) public view returns(string){
+        return candidateInformationMap[_address].name;
     }
     
     function getCandidatebirthOfDate(address _address) public view returns(string){
-        return candidate.getCandidatebirthOfDate(_address);
+        return candidateInformationMap[_address].birthOfDate;
     }
     
     
     
    function getCandidateCity(address _address) public view returns(string){
-       return candidate.getCandidateCity(_address);
+        return candidateDetailsMap[_address].city;
     }
     
     
       function getCandidateYear(address _address) public view returns(string){
-          return candidate.getCandidateYear(_address);
+        return candidateDetailsMap[_address].year;
     }
     
     
     
-    //   function getCandidateNumberOfVotes(string candidateIdNumber) public view returns(uint){
-    //       candidate.getCandidateNumberOfVotes(candidateIdNumber);
-    // }
+      function getCandidateNumberOfVotes(address _address) public view returns(uint){
+        return candidateTrackingMap[_address].numberOfVotes;
+    }
+    
+    function getCandidatePassword(address _address) public view returns(string){
+         return candidateInformationMap[_address].password;
+    } 
     
     
+    function checkIdAndPassword(address _address,string nationalId,string password) public view returns (bool)
+    {
+        if( keccak256(abi.encodePacked(candidateInformationMap[_address].password))== keccak256(abi.encodePacked(password)))
+        {
+            return true;
+        }
+        else
+        return false;
+    }
 
     //////// end of getter
-    
-    /// end of candidate Functions
-    
-    
-    
-    //// voters functions 
-    
-    function addVoterInfo(address _address,string voterIdNumber,string name,string birthOfDate,string password) public {
-        voters.addVoterInfo(_address, voterIdNumber, name, birthOfDate, password);
-          
-    }
-    
-    function addVoterDetails (address _address,string voterIdNumber, string city,string year) public {
-        voters.addVoterDetails (_address, voterIdNumber,  city, year);
-    }
-    
-        function getNationalID(uint index)public view returns (string)
-    {
-         return   voters.getNationalID(index);
-    }
-    
-    function getVotersNationalIDArrayLength() public view returns (uint)
-    {
-        return voters.getNationalIDArrayLength();
-    }
-    
-    
-    
-    function addVoterVotes(address _address,string voterIdNumber,string  candidateIdNumber) public returns(string){
-        
-        voters.addVoterVotes( _address,voterIdNumber,  candidateIdNumber);
-    }
-    
-    function getVoterVotes(string voterIdNumber) public view returns(uint){
-    
-        voters.getVoterVotes( voterIdNumber);
-    }
-    
-    //  function getVotersInfo(uint index) public view returns(string,string){
-    //     //string memory nationalId = voters.getNationalID(index);
-    //     return(voters.getVoterName(_address),voters.getVoterDateOfBirth(_address));
-    // }
 
-
-
-
-    
-    
-    
-
-    
-    
-        //// end of voters functions    
-
-    
-    
-    
-    // start Judgment functions
-    
-    
-    
-    function addJudgmentInformation (string judgmentInformationId,string name,string birthOfDate,string password) public {
-        
-        judgment.addJudgmentInformation ( judgmentInformationId, name, birthOfDate, password);
-    }
-    
-    function addCandidate(address _address,string candidateIdNumber , string name,string birthOfDate, string password,string city,string year,
-    string phoneNumber) public {
-
-           candidate.addCandidate(_address,candidateIdNumber,name,birthOfDate,password);
-        candidate.addCandidateDetails(_address,candidateIdNumber,city,year,phoneNumber);
-        candidate.addCandidateTracking(_address,candidateIdNumber,0);
+       
       
-    }
-    
-    
-    
-}
+       
   
-    
-
-
+}
