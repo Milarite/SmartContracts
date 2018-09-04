@@ -30,7 +30,7 @@ contract MainContract  {
     }
     
     ///// candidate Functions
-    function getCandidatePhonenumber(address _address,string CandidateIdNumber) public view returns(string){
+    function getCandidatePhonenumber(address _address) public view returns(string){
         return candidate.getCandidatePhonenumber(_address);
     }
     
@@ -58,7 +58,7 @@ contract MainContract  {
     
     
     
-    function getCandidateVotesNumber(address _address,string candidateIdNumber) public view returns(uint){
+    function getCandidateVotesNumber(address _address) public view returns(uint){
         return candidate.getCandidateVotesNumber(_address);
     }
     
