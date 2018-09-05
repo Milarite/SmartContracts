@@ -29,9 +29,10 @@ contract Voters
     }
     
    votersVotes[] votersVotesArray;
+   voterInfo [] arrayVoterInfo;
    
    mapping(address => votersVotes[]) mapVotersVotes;
-   
+   mapping (string =>address) singInMap;
     mapping (address=>voterInfo) voterInfoMap;
     mapping (address => voterDetails) voterDetailsMap;
     mapping (address => votersVotes) votersVotesMap;
@@ -39,14 +40,15 @@ contract Voters
      address [] arrayNationalID;
 
     function addVoterInfo(address _address,string voterIdNumber,string name,string birthOfDate,string password) public {
-                arrayNationalID.push(_address);
+        arrayNationalID.push(_address);
         voterInfoMap[_address] = voterInfo(_address,voterIdNumber,name,birthOfDate,password);
+        arrayVoterInfo.push(voterInfo(_address,voterIdNumber,name,birthOfDate,password) );
+
     }
     
     function addVoterDetails (address _address,string voterIdNumber,  string city,string year) public {
         voterDetailsMap[_address] = voterDetails(_address,voterIdNumber,city,year);
     }
-    
         function getVotedCandidatesAddress(address voterAddress,uint idex)public view returns (address)
     {
         return mapVotersVotes[voterAddress][idex].candidateAddress;
@@ -107,16 +109,40 @@ contract Voters
         return voterInfoMap[_address].birthOfDate;
     }
     
-     function checkIdAndPassword(address _address,string password) public view returns (bool)
+     function checkIdAndPassword(string nationalID,string password) public view returns (address)
     {
-        if( keccak256(abi.encodePacked(voterInfoMap[_address].password))== keccak256(abi.encodePacked(password)))
+        
+        if( keccak256(abi.encodePacked(voterInfoMap[singInMap[nationalID]].password))== keccak256(abi.encodePacked(password)))
         {
-            return true;
+            return voterInfoMap[singInMap[nationalID]].UserAddress;
         }
-        else
-        return false;
+        
     }
    
+   function signUpVoter(address _address,string nationalID,string password,string name,string birthOfDate,string city,string year)public  
+   {
+       
+       
+     addVoterInfo(_address,nationalID, name, birthOfDate, password);
+     addVoterDetails (_address,nationalID,city, year);
+     singInMap[nationalID]=_address;
+       
+       
+
+       
+   }
+   function checkNationalID(string nationalID) public view returns (bool)
+   {
+       for(uint i=0;i<arrayVoterInfo.length;i++)
+    {
+     if( keccak256(abi.encodePacked(  arrayVoterInfo[i].voterIdNumber))==keccak256(abi.encodePacked(nationalID)))
+     {
+         return false;
+     }
+   
+    }
+    return true;
+   }
     
     
     

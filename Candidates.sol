@@ -20,6 +20,7 @@ contract Candidates
             string city;
             string year;
             string phoneNumber;
+            string campaign;
       }
       struct candidateTracking
        {
@@ -46,6 +47,10 @@ contract Candidates
     function getCandidatePhonenumber(address _address) public view returns(string){
         return candidateDetailsMap[_address].phoneNumber;
     }
+    
+     function getCandidateCampaign(address _address) public view returns(string){
+        return candidateDetailsMap[_address].campaign;
+     }
     function getNationalID(uint index)public view returns (string)
     {
         return arrayNationalID[index];
@@ -55,8 +60,8 @@ contract Candidates
     {
         return arrayNationalID.length;
     }
-    function addCandidateDetails(address _address,string candidateIdNumber,string city,string year,string phoneNumber) public{
-        candidateDetailsMap[_address] = candidateDetails(_address,candidateIdNumber,city,year,phoneNumber);
+    function addCandidateDetails(address _address,string candidateIdNumber,string city,string year,string phoneNumber,string campaign) public{
+        candidateDetailsMap[_address] = candidateDetails(_address,candidateIdNumber,city,year,phoneNumber,campaign);
     }
     
     function addCandidateTracking(address _address,uint numberOfVotes) public{

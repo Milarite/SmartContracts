@@ -27,6 +27,11 @@ contract MainContract  {
         return candidate.getCandidatePhonenumber(_address);
     }
     
+    
+     function getCandidateCampaign(address _address) public view returns(string){
+        return candidate.getCandidateCampaign(_address);
+     }
+    
      function getCandidateNationalID(uint index)public view returns (string)
     {
        return candidate.getNationalID(index);
@@ -36,8 +41,8 @@ contract MainContract  {
     {
         return candidate.getNationalIDArrayLength();
     }
-    function addCandidateDetails(address _address,string candidateIdNumber,string city,string year,string phoneNumber) public{
-        candidate.addCandidateDetails( _address,candidateIdNumber,city,year,phoneNumber);
+    function addCandidateDetails(address _address,string candidateIdNumber,string city,string year,string phoneNumber,string campaign) public{
+        candidate.addCandidateDetails( _address,candidateIdNumber,city,year,phoneNumber,campaign);
      
     }
     
@@ -101,14 +106,14 @@ contract MainContract  {
     
     //// voters functions 
     
-    function addVoterInfo(address _address,string voterIdNumber,string name,string birthOfDate,string password) public {
-        voters.addVoterInfo(_address, voterIdNumber, name, birthOfDate, password);
+    // function addVoterInfo(address _address,string voterIdNumber,string name,string birthOfDate,string password) public {
+    //     voters.addVoterInfo(_address, voterIdNumber, name, birthOfDate, password);
           
-    }
+    // }
     
-    function addVoterDetails (address _address,string voterIdNumber, string city,string year) public {
-        voters.addVoterDetails (_address, voterIdNumber,  city, year);
-    }
+    // function addVoterDetails (address _address,string voterIdNumber, string city,string year) public {
+    //     voters.addVoterDetails (_address, voterIdNumber,  city, year);
+    // }
     
         function getVotedCandidatesAddress(address voterAddress,uint index)public view returns (address)
     {
@@ -199,10 +204,10 @@ contract MainContract  {
     }
     
     function addCandidate(address _address,string candidateIdNumber , string name,string birthOfDate, string password,string city,string year,
-    string phoneNumber) public {
+    string phoneNumber,string campaign) public {
 
            candidate.addCandidate(_address,candidateIdNumber,name,birthOfDate,password);
-        candidate.addCandidateDetails(_address,candidateIdNumber,city,year,phoneNumber);
+        candidate.addCandidateDetails(_address,candidateIdNumber,city,year,phoneNumber,campaign);
         candidate.addCandidateTracking(_address,0);
       
     }
