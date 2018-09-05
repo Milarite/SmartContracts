@@ -32,7 +32,7 @@ contract MainContract  {
         return candidate.getCandidateCampaign(_address);
      }
     
-     function getCandidateNationalID(uint index)public view returns (string)
+     function getCandidateNationalID(uint index)public view returns (address)
     {
        return candidate.getNationalID(index);
     }

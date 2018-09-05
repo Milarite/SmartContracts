@@ -34,11 +34,11 @@ contract Candidates
        mapping (address=>candidateDetails) candidateDetailsMap;
        mapping (address=>candidateTracking) candidateTrackingMap;
        
-       string [] arrayNationalID;
+       address [] arrayNationalID;
       
        function addCandidate(address _address,string candidateIdNumber , string name,string birthOfDate, string password) public {
         
-        arrayNationalID.push(candidateIdNumber);
+        arrayNationalID.push(_address);
         candidateInformationMap[_address] = candidateInformation(_address,candidateIdNumber,name,birthOfDate,password);
     //    candidatesIds.push(candidateIdNumber);
         
@@ -51,7 +51,7 @@ contract Candidates
      function getCandidateCampaign(address _address) public view returns(string){
         return candidateDetailsMap[_address].campaign;
      }
-    function getNationalID(uint index)public view returns (string)
+    function getNationalID(uint index)public view returns (address)
     {
         return arrayNationalID[index];
     }
