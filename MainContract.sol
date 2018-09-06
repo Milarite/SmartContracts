@@ -212,10 +212,10 @@ contract MainContract  {
       
     }
     
-    
+    function sendEther(address _address , uint _balance) public payable{
+        
+        // _address.transfer(_balance);
+
+    }
     
 }
-  
-    
-
-
