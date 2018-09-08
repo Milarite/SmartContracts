@@ -126,12 +126,16 @@ contract MainContract  {
     }
     
     
-       function Voting(address voterAddress,address CandidateAddress) public {
+       function Voting(address voterAddress,address CandidateAddress) public view returns (string){
         
         voters.addVoterVotes(voterAddress,CandidateAddress);
         candidate.addCandidateTracking(CandidateAddress,candidate.getCandidateVotesNumber(CandidateAddress) + 1);//get last candidate votes and add 1
 
     }
+        function revokeMyVote(address _voterAddress, address _candidateAddress) public
+        {
+            voters.revokeMyVote(_voterAddress,_candidateAddress);
+        }
     
     // function addVoterVotes(address _address,string voterIdNumber,string  candidateIdNumber) public returns(string){
         
@@ -212,10 +216,14 @@ contract MainContract  {
       
     }
     
+    
     function sendEther(address _address , uint _balance) public payable{
         
-        // _address.transfer(_balance);
+        _address.transfer(_balance);
 
     }
-    
 }
+  
+    
+
+

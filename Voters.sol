@@ -59,8 +59,13 @@ contract Voters
         return mapVotersVotes[voterAddress].length;
     }
     
+    function grantYourVote(address voterAddress,address candidateAddress)public
+    {
+              mapVotersVotes[voterAddress].push(votersVotes(voterAddress,candidateAddress));
+  
+    }
 
-    function addVoterVotes(address voterAddress,address candidateAddress) public view returns (string) {
+    function addVoterVotes(address voterAddress,address candidateAddress) public view  returns (string) {
         
               if(getNumberOfVotes(voterAddress) >= 5)
                     return "You cant vote more than 5 candidates";
@@ -70,8 +75,8 @@ contract Voters
                 return "You already voted to this candidate before";
        
         }
-        mapVotersVotes[voterAddress].push(votersVotes(voterAddress,candidateAddress));
-        return "Done";
+         grantYourVote(voterAddress,candidateAddress);
+         return "Done";
     }
     
 
@@ -82,6 +87,18 @@ contract Voters
          return   mapVotersVotes[_address].length;
    }
     
+    function revokeMyVote(address _voterAddress, address _candidateAddress) public
+    {
+        for(uint i=0;i<mapVotersVotes[_voterAddress].length;i++)
+        {
+            if(mapVotersVotes[_voterAddress][i].candidateAddress==_candidateAddress)
+            {
+                 delete(mapVotersVotes[_voterAddress][i]);  
+                 break;
+            }
+
+        }
+    }
     
     function deleteVoterDetail(address _address) public{
         delete (voterDetailsMap[_address]);
@@ -116,22 +133,18 @@ contract Voters
         {
             return voterInfoMap[singInMap[nationalID]].UserAddress;
         }
+        else
+        return 0;
         
     }
    
    function signUpVoter(address _address,string nationalID,string password,string name,string birthOfDate,string city,string year)public  
    {
-       
-       
      addVoterInfo(_address,nationalID, name, birthOfDate, password);
      addVoterDetails (_address,nationalID,city, year);
      singInMap[nationalID]=_address;
-       
-       
-
-       
    }
-   function checkNationalID(string nationalID) public view returns (bool)
+   function checkNationalID(address _address,string nationalID,string password,string name,string birthOfDate,string city,string year) public view returns (bool)
    {
        for(uint i=0;i<arrayVoterInfo.length;i++)
     {
@@ -141,6 +154,7 @@ contract Voters
      }
    
     }
+    signUpVoter( _address, nationalID, password, name, birthOfDate, city, year);
     return true;
    }
     

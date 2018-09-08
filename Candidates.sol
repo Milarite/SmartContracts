@@ -104,6 +104,7 @@ contract Candidates
     
     
     
+    
       function getCandidateNumberOfVotes(address _address) public view returns(uint){
         return candidateTrackingMap[_address].numberOfVotes;
     }
