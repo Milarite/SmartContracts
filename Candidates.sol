@@ -10,7 +10,7 @@ contract Candidates
          string name;
          string birthOfDate;
          string password;
-
+ 
     }
      struct candidateDetails
       {
@@ -126,7 +126,7 @@ contract Candidates
         else
         return false;
     }
-
+ 
     //////// end of getter
     
     function getCandidateAddressByNationalId(string nationalId) public view returns(address){
@@ -136,7 +136,7 @@ contract Candidates
     
     
     
-
+ 
        
       
        
