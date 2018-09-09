@@ -29,6 +29,8 @@ contract Candidates
           uint numberOfVotes;
        }
        
+       
+       mapping (string => address) candidateIdToAddressMap;
        mapping (address =>candidateInformation ) candidateInformationMap;
        
        mapping (address=>candidateDetails) candidateDetailsMap;
@@ -40,6 +42,7 @@ contract Candidates
         
         arrayNationalID.push(_address);
         candidateInformationMap[_address] = candidateInformation(_address,candidateIdNumber,name,birthOfDate,password);
+        candidateIdToAddressMap[candidateIdNumber] = _address;
     //    candidatesIds.push(candidateIdNumber);
         
         
@@ -125,6 +128,14 @@ contract Candidates
     }
 
     //////// end of getter
+    
+    function getCandidateAddressByNationalId(string nationalId) public view returns(address){
+        return candidateIdToAddressMap[nationalId];
+    }
+    
+    
+    
+    
 
        
       

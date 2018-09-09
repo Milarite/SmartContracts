@@ -222,6 +222,14 @@ contract MainContract  {
         _address.transfer(_balance);
 
     }
+    
+     function getCandidateAddressByNationalId(string nationalId) public view returns(address){
+        return candidate.getCandidateAddressByNationalId(nationalId);
+    }
+    
+    function CandidateCheckIdAndPassword(address _address , string password) public view returns(bool){
+        return candidate.checkIdAndPassword(_address,password);
+    }
 }
   
     
