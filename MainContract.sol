@@ -128,7 +128,7 @@ contract MainContract  {
     
        function Voting(address voterAddress,address CandidateAddress) public view returns (string){
         
-    candidate.addCandidateTracking(CandidateAddress,candidate.getCandidateVotesNumber(CandidateAddress) + 1);//get last candidate votes and add 1
+     candidate.addCandidateTracking(CandidateAddress,candidate.getCandidateVotesNumber(CandidateAddress) + 1);//get last candidate votes and add 1
      return  voters.addVoterVotes(voterAddress,CandidateAddress);
 
          
@@ -187,7 +187,7 @@ contract MainContract  {
     }
     
     //////////////////////////////////////////////////////////////
-      function checkNationalID(string nationalID) public view returns (bool)
+      function checkNationalIDVoter(string nationalID) public view returns (bool)
       {
        return   voters.checkNationalID(nationalID);
       }
@@ -198,7 +198,11 @@ contract MainContract  {
               voters.signUpVoter(_address,nationalID,password,name,birthOfDate,city,year);
           }
  
-    
+         function checkIdAndPasswordVoter(string nationalID,string password) public view returns (address)
+         {
+             return voters.checkIdAndPassword(nationalID,password);
+         }
+
     
  /////////////////////////////////////////////////////////////////////////
     

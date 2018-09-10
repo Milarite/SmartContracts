@@ -33,7 +33,7 @@ contract Voters
    
     mapping(address => votersVotes[]) mapVotersVotes;
     mapping (string =>address) singInMap;
-mapping (string => bool)signedUsers ;
+    mapping (string => bool)signedUsers ;
     mapping (address=>voterInfo) voterInfoMap;
     mapping (address => voterDetails) voterDetailsMap;
     mapping (address => votersVotes) votersVotesMap;
@@ -44,7 +44,7 @@ mapping (string => bool)signedUsers ;
         arrayNationalID.push(_address);
         voterInfoMap[_address] = voterInfo(_address,voterIdNumber,name,birthOfDate,password);
         //arrayVoterInfo.push(voterInfo(_address,voterIdNumber,name,birthOfDate,password) );
- signedUsers[voterIdNumber] = true;
+        signedUsers[voterIdNumber] = true;
     }
     
     function addVoterDetails (address _address,string voterIdNumber,  string city,string year) public {
