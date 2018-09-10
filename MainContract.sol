@@ -208,9 +208,6 @@ contract MainContract  {
     
     
         //// end of voters functions    
- 
-    
-    
     
     // start Judgment functions
     
