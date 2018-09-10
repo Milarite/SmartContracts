@@ -128,10 +128,11 @@ contract MainContract  {
     
        function Voting(address voterAddress,address CandidateAddress) public view returns (string){
         
-        voters.addVoterVotes(voterAddress,CandidateAddress);
-        candidate.addCandidateTracking(CandidateAddress,candidate.getCandidateVotesNumber(CandidateAddress) + 1);//get last candidate votes and add 1
- 
-    }
+    candidate.addCandidateTracking(CandidateAddress,candidate.getCandidateVotesNumber(CandidateAddress) + 1);//get last candidate votes and add 1
+     return  voters.addVoterVotes(voterAddress,CandidateAddress);
+
+         
+       }
         function revokeMyVote(address _voterAddress, address _candidateAddress) public
         {
             voters.revokeMyVote(_voterAddress,_candidateAddress);
@@ -185,14 +186,13 @@ contract MainContract  {
         voters.getVoterDateOfBirth(_address);
     }
     
-    
-       function checkNationalID(string nationalID) public view returns (bool)
-       {
-           voters.checkNationalID(nationalID);
-       }
+    //////////////////////////////////////////////////////////////
+      function checkNationalID(string nationalID) public view returns (bool)
+      {
+       return   voters.checkNationalID(nationalID);
+      }
        
-          function signUpVoter
-          (address _address,string nationalID,string password,string name,string birthOfDate,string city,string year)
+          function signUpVoter (address _address,string nationalID,string password,string name,string birthOfDate,string city,string year)
           public  
           {
               voters.signUpVoter(_address,nationalID,password,name,birthOfDate,city,year);
@@ -200,7 +200,7 @@ contract MainContract  {
  
     
     
- 
+ /////////////////////////////////////////////////////////////////////////
     
     
         //// end of voters functions    
@@ -237,7 +237,7 @@ contract MainContract  {
         return candidate.getCandidateAddressByNationalId(nationalId);
     }
     
-    function CandidateCheckIdAndPassword(address _address , string password) public view returns(bool){
+    function CandidateCheckIdAndPassword(address _address , string password) public view returns (string) {
         return candidate.checkIdAndPassword(_address,password);
     }
 }
