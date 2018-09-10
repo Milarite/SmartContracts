@@ -1,8 +1,10 @@
 pragma solidity ^0.4.17;
+import "./Candidates.sol";
 contract Judgment
 {
     
- 
+    Candidates candidates = new Candidates();
+    
     struct judgmentInformation
     {
         
@@ -12,7 +14,7 @@ contract Judgment
          string birthOfDate;
          string password;
          
- 
+
     }
     
     mapping (address=>judgmentInformation) judgmentInformationMap;
@@ -32,7 +34,7 @@ contract Judgment
         return false;
     }
     
- 
+
     //////// end of getter
- 
+
 }

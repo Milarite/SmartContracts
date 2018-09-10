@@ -1,9 +1,9 @@
 pragma solidity ^0.4.24;
- 
+
 import "./Candidates.sol";
 import "./Voters.sol";
 import "./Judgment.sol";
- 
+
 
 contract MainContract  {
     
@@ -97,7 +97,7 @@ contract MainContract  {
     // }
     
     
- 
+
     //////// end of getter
     
     /// end of candidate Functions
@@ -130,7 +130,7 @@ contract MainContract  {
         
         voters.addVoterVotes(voterAddress,CandidateAddress);
         candidate.addCandidateTracking(CandidateAddress,candidate.getCandidateVotesNumber(CandidateAddress) + 1);//get last candidate votes and add 1
- 
+
     }
         function revokeMyVote(address _voterAddress, address _candidateAddress) public
         {
@@ -151,8 +151,9 @@ contract MainContract  {
     //     //string memory nationalId = voters.getNationalID(index);
     //     return(voters.getVoterName(_address),voters.getVoterDateOfBirth(_address));
     // }
- 
- 
+
+
+
 
     
     
@@ -186,25 +187,14 @@ contract MainContract  {
     }
     
     
-       function checkNationalID(string nationalID) public view returns (bool)
-       {
-           voters.checkNationalID(nationalID);
-       }
-       
-          function signUpVoter
-          (address _address,string nationalID,string password,string name,string birthOfDate,string city,string year)
-          public  
-          {
-              voters.signUpVoter(_address,nationalID,password,name,birthOfDate,city,year);
-          }
- 
     
     
- 
+    
+
     
     
         //// end of voters functions    
- 
+
     
     
     
@@ -219,7 +209,7 @@ contract MainContract  {
     
     function addCandidate(address _address,string candidateIdNumber , string name,string birthOfDate, string password,string city,string year,
     string phoneNumber,string campaign) public {
- 
+
            candidate.addCandidate(_address,candidateIdNumber,name,birthOfDate,password);
         candidate.addCandidateDetails(_address,candidateIdNumber,city,year,phoneNumber,campaign);
         candidate.addCandidateTracking(_address,0);
@@ -230,14 +220,10 @@ contract MainContract  {
     function sendEther(address _address , uint _balance) public payable{
         
         _address.transfer(_balance);
- 
-    }
-    
-     function getCandidateAddressByNationalId(string nationalId) public view returns(address){
-        return candidate.getCandidateAddressByNationalId(nationalId);
-    }
-    
-    function CandidateCheckIdAndPassword(address _address , string password) public view returns(bool){
-        return candidate.checkIdAndPassword(_address,password);
+
     }
 }
+  
+    
+
+
