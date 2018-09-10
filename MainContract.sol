@@ -1,10 +1,10 @@
 pragma solidity ^0.4.24;
-
+ 
 import "./Candidates.sol";
 import "./Voters.sol";
 import "./Judgment.sol";
-
-
+ 
+ 
 contract MainContract  {
     
    
@@ -97,7 +97,7 @@ contract MainContract  {
     // }
     
     
-
+ 
     //////// end of getter
     
     /// end of candidate Functions
@@ -126,13 +126,19 @@ contract MainContract  {
     }
     
     
-       function Voting(address voterAddress,address CandidateAddress) public view returns (string){
+       function checkIfVoted(address voterAddress,address CandidateAddress) public view returns (string){
         
-     candidate.addCandidateTracking(CandidateAddress,candidate.getCandidateVotesNumber(CandidateAddress) + 1);//get last candidate votes and add 1
      return  voters.addVoterVotes(voterAddress,CandidateAddress);
-
+ 
          
        }
+           function grantYourVote(address voterAddress,address candidateAddress)public
+
+            {
+                     voters.grantYourVote(voterAddress,candidateAddress);
+                     candidate.addCandidateTracking(candidateAddress,candidate.getCandidateVotesNumber(candidateAddress) + 1);//get last candidate votes and add 1
+
+            }
         function revokeMyVote(address _voterAddress, address _candidateAddress) public
         {
             voters.revokeMyVote(_voterAddress,_candidateAddress);
@@ -145,17 +151,16 @@ contract MainContract  {
     
     function getNumberOfVotes(address _address) public view returns(uint){
     
-        voters.getNumberOfVotes(_address);
+       return voters.getNumberOfVotes(_address);
     }
     
     //  function getVotersInfo(uint index) public view returns(string,string){
     //     //string memory nationalId = voters.getNationalID(index);
     //     return(voters.getVoterName(_address),voters.getVoterDateOfBirth(_address));
     // }
-
-
-
-
+ 
+ 
+ 
     
     
     
@@ -171,20 +176,20 @@ contract MainContract  {
     
     
      function getVoterCity(address _address) public view returns(string){
-        voters.getVoterCity(_address);
+      return  voters.getVoterCity(_address);
     }
     
     
       function getVoterYear(address _address) public view returns(string){
-        voters.getVoterYear(_address);
+       return voters.getVoterYear(_address);
     }
     
     function getVoterName(address _address)  public view returns(string) {
-        voters.getVoterName(_address);
+       return voters.getVoterName(_address);
     }
     
     function getVoterDateOfBirth (address _address)public view returns(string){
-        voters.getVoterDateOfBirth(_address);
+     return   voters.getVoterDateOfBirth(_address);
     }
     
     //////////////////////////////////////////////////////////////
@@ -203,7 +208,7 @@ contract MainContract  {
          {
              return voters.checkIdAndPassword(nationalID,password);
          }
-
+ 
     
  /////////////////////////////////////////////////////////////////////////
     
@@ -221,7 +226,7 @@ contract MainContract  {
     
     function addCandidate(address _address,string candidateIdNumber , string name,string birthOfDate, string password,string city,string year,
     string phoneNumber,string campaign) public {
-
+ 
            candidate.addCandidate(_address,candidateIdNumber,name,birthOfDate,password);
         candidate.addCandidateDetails(_address,candidateIdNumber,city,year,phoneNumber,campaign);
         candidate.addCandidateTracking(_address,0);
@@ -232,12 +237,14 @@ contract MainContract  {
     function sendEther(address _address , uint _balance) public payable{
         
         _address.transfer(_balance);
-
+ 
     }
-}
-  
     
-    function CandidateCheckIdAndPassword(address _address , string password) public view returns (string) {
+     function getCandidateAddressByNationalId(string nationalId) public view returns(address){
+        return candidate.getCandidateAddressByNationalId(nationalId);
+    }
+    
+    function CandidateCheckIdAndPassword(address _address , string password) public view returns (bool) {
         return candidate.checkIdAndPassword(_address,password);
     }
 }

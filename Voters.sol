@@ -1,6 +1,6 @@
 pragma solidity ^0.4.24;
  
-
+ 
 contract Voters
 {
     struct  voterInfo 
@@ -147,7 +147,7 @@ contract Voters
    }
    function checkNationalID(string nationalID) public view returns (bool)
    {
-
+ 
 if(signedUsers[nationalID]==true)
      {
 return true;}
