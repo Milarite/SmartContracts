@@ -128,10 +128,11 @@ contract MainContract  {
     
        function Voting(address voterAddress,address CandidateAddress) public view returns (string){
         
-        voters.addVoterVotes(voterAddress,CandidateAddress);
-        candidate.addCandidateTracking(CandidateAddress,candidate.getCandidateVotesNumber(CandidateAddress) + 1);//get last candidate votes and add 1
+     candidate.addCandidateTracking(CandidateAddress,candidate.getCandidateVotesNumber(CandidateAddress) + 1);//get last candidate votes and add 1
+     return  voters.addVoterVotes(voterAddress,CandidateAddress);
 
-    }
+         
+       }
         function revokeMyVote(address _voterAddress, address _candidateAddress) public
         {
             voters.revokeMyVote(_voterAddress,_candidateAddress);
@@ -186,17 +187,28 @@ contract MainContract  {
         voters.getVoterDateOfBirth(_address);
     }
     
-    
-    
-    
-    
+    //////////////////////////////////////////////////////////////
+      function checkNationalIDVoter(string nationalID) public view returns (bool)
+      {
+       return   voters.checkNationalID(nationalID);
+      }
+       
+          function signUpVoter (address _address,string nationalID,string password,string name,string birthOfDate,string city,string year)
+          public  
+          {
+              voters.signUpVoter(_address,nationalID,password,name,birthOfDate,city,year);
+          }
+ 
+         function checkIdAndPasswordVoter(string nationalID,string password) public view returns (address)
+         {
+             return voters.checkIdAndPassword(nationalID,password);
+         }
 
+    
+ /////////////////////////////////////////////////////////////////////////
     
     
         //// end of voters functions    
-
-    
-    
     
     // start Judgment functions
     
@@ -225,5 +237,7 @@ contract MainContract  {
 }
   
     
-
-
+    function CandidateCheckIdAndPassword(address _address , string password) public view returns (string) {
+        return candidate.checkIdAndPassword(_address,password);
+    }
+}

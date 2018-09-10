@@ -117,14 +117,14 @@ contract Candidates
     } 
     
     
-    function checkIdAndPassword(address _address,string password) public view returns (bool)
+    function checkIdAndPassword(address _address,string password) public view returns (string)
     {
         if( keccak256(abi.encodePacked(candidateInformationMap[_address].password))== keccak256(abi.encodePacked(password)))
         {
-            return true;
+            return "true";
         }
         else
-        return false;
+        return "false";
     }
  
     //////// end of getter
