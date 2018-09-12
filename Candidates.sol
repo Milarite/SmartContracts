@@ -37,6 +37,14 @@ contract Candidates
        mapping (address=>candidateTracking) candidateTrackingMap;
        
        address [] arrayNationalID;
+       function deleteCandidate(address _address,string nationalID)public
+       {
+           delete(candidateInformationMap[_address]);
+           delete(candidateDetailsMap[_address]);
+           delete(candidateTrackingMap[_address]);
+           delete(candidateIdToAddressMap[nationalID]);
+
+       }
       
        function addCandidate(address _address,string candidateIdNumber , string name,string birthOfDate, string password) public {
         

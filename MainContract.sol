@@ -91,7 +91,10 @@ contract MainContract  {
     }
     
     
-    
+           function deleteCandidate(address _address,string nationalID)public
+           {
+               candidate.deleteCandidate(_address,nationalID);
+           }
     //   function getCandidateNumberOfVotes(string candidateIdNumber) public view returns(uint){
     //       candidate.getCandidateNumberOfVotes(candidateIdNumber);
     // }
@@ -128,7 +131,7 @@ contract MainContract  {
     
        function checkIfVoted(address voterAddress,address CandidateAddress) public view returns (string){
         
-     return  voters.addVoterVotes(voterAddress,CandidateAddress);
+          return  voters.addVoterVotes(voterAddress,CandidateAddress);
  
          
        }
@@ -142,6 +145,8 @@ contract MainContract  {
         function revokeMyVote(address _voterAddress, address _candidateAddress) public
         {
             voters.revokeMyVote(_voterAddress,_candidateAddress);
+          candidate.addCandidateTracking(_candidateAddress,candidate.getCandidateVotesNumber(_candidateAddress) - 1);//get last candidate votes and add 1
+
         }
     
     // function addVoterVotes(address _address,string voterIdNumber,string  candidateIdNumber) public returns(string){

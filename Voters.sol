@@ -19,7 +19,7 @@ contract Voters
         string voterIdNumber;
         string city;
         string year;
-    
+        uint numberOfVotes;
     }
     
     struct votersVotes{
@@ -48,7 +48,7 @@ contract Voters
     }
     
     function addVoterDetails (address _address,string voterIdNumber,  string city,string year) public {
-        voterDetailsMap[_address] = voterDetails(_address,voterIdNumber,city,year);
+        voterDetailsMap[_address] = voterDetails(_address,voterIdNumber,city,year,0);
     }
         function getVotedCandidatesAddress(address voterAddress,uint idex)public view returns (address)
     {
@@ -63,15 +63,19 @@ contract Voters
     function grantYourVote(address voterAddress,address candidateAddress)public
     {
               mapVotersVotes[voterAddress].push(votersVotes(voterAddress,candidateAddress));
+              voterDetailsMap[voterAddress].numberOfVotes=voterDetailsMap[voterAddress].numberOfVotes+1;
   
     }
+    
+    //checkIfVoted
  
     function addVoterVotes(address voterAddress,address candidateAddress) public view  returns (string) {
         
-              if(getNumberOfVotes(voterAddress) >= 5)
+        uint count=getNumberOfVotes(voterAddress);
+              if(count >= 5)
                     return "You cant vote more than 5 candidates";
                 
-             for (uint i = 0 ; i < mapVotersVotes[voterAddress].length ; i++ ){
+             for (uint i = 0 ; i < count ; i++ ){
             if(keccak256(abi.encodePacked(mapVotersVotes[voterAddress][i].candidateAddress)) == keccak256(abi.encodePacked(candidateAddress)))
                 return "You already voted to this candidate before";
         }
@@ -84,7 +88,7 @@ contract Voters
    function getNumberOfVotes(address _address)public view returns(uint)
    {
       
-         return   mapVotersVotes[_address].length;
+         return   voterDetailsMap[_address].numberOfVotes;
    }
     
     function revokeMyVote(address _voterAddress, address _candidateAddress) public
@@ -94,6 +98,8 @@ contract Voters
             if(mapVotersVotes[_voterAddress][i].candidateAddress==_candidateAddress)
             {
                  delete(mapVotersVotes[_voterAddress][i]);  
+                voterDetailsMap[_voterAddress].numberOfVotes=voterDetailsMap[_voterAddress].numberOfVotes-1;
+
                  break;
             }
  
