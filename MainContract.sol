@@ -198,7 +198,7 @@ contract MainContract  {
     }
     
     
-    function getCandidateNationalID(address _address) public view returns(string){
+    function getCandidateNational(address _address) public view returns(string){
         
         return candidate.getCandidateNationalId(_address);
         
@@ -240,8 +240,8 @@ contract MainContract  {
     string phoneNumber,string campaign) public {
  
            candidate.addCandidate(_address,candidateIdNumber,name,birthOfDate,password);
-        candidate.addCandidateDetails(_address,candidateIdNumber,city,year,phoneNumber,campaign);
-        candidate.addCandidateTracking(_address,0);
+     //   candidate.addCandidateDetails(_address,candidateIdNumber,city,year,phoneNumber,cmpaign);
+    //    candidate.addCandidateTracking(_address,0);
       
     }
     
