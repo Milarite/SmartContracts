@@ -141,6 +141,12 @@ contract Candidates
         return candidateIdToAddressMap[nationalId];
     }
     
+    function getCandidateNationalId(address _address) public view returns(string){
+        
+        return candidateInformationMap[_address].candidateIdNumber; 
+        
+    }
+    
     
     
     

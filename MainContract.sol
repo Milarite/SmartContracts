@@ -197,6 +197,13 @@ contract MainContract  {
      return   voters.getVoterDateOfBirth(_address);
     }
     
+    
+    function getCandidateNationalID(address _address) public view returns(string){
+        
+        return candidate.getCandidateNationalId(_address);
+        
+    }
+    
     //////////////////////////////////////////////////////////////
       function checkNationalIDVoter(string nationalID) public view returns (bool)
       {
