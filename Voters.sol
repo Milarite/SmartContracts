@@ -3,6 +3,12 @@ pragma solidity ^0.4.24;
  
 contract Voters
 {
+    
+    address constant _noAddress = 0x0000000000000000000000000000000000000000;
+    modifier onlyVoter(address _voter){
+       require(voterInfoMap[_voter].UserAddress != _noAddress );
+       _;
+    }
     struct  voterInfo 
     {
          address UserAddress;
@@ -60,7 +66,7 @@ contract Voters
         return mapVotersVotes[voterAddress].length;
     }
     
-    function grantYourVote(address voterAddress,address candidateAddress)public
+    function grantYourVote(address voterAddress,address candidateAddress) public onlyVoter(voterAddress)
     {
               mapVotersVotes[voterAddress].push(votersVotes(voterAddress,candidateAddress));
               voterDetailsMap[voterAddress].numberOfVotes=voterDetailsMap[voterAddress].numberOfVotes+1;
@@ -91,7 +97,7 @@ contract Voters
          return   voterDetailsMap[_address].numberOfVotes;
    }
     
-    function revokeMyVote(address _voterAddress, address _candidateAddress) public
+    function revokeMyVote(address _voterAddress, address _candidateAddress) public onlyVoter(_voterAddress)
     {
         for(uint i=0;i<mapVotersVotes[_voterAddress].length;i++)
         {

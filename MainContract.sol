@@ -11,13 +11,20 @@ contract MainContract  {
     Candidates candidate;
     Voters voters;
     Judgment judgment;
+    address owner;
     
     constructor(Candidates _candidate , Voters _voters,Judgment _judgment) public{
         candidate = _candidate;
         voters = _voters;
         judgment = _judgment;
+        owner= msg.sender;
       }
     
+
+    modifier OnlyOwner (){
+        require(msg.sender==owner);
+        _;
+    }
     
     
  
