@@ -92,9 +92,9 @@ contract MainContract  {
     }
     
     
-           function deleteCandidate(string _nationalId,string nationalID)public
+           function deleteCandidate(string _nationalId)public
            {
-               candidate.deleteCandidate(_nationalId,nationalID);
+               candidate.deleteCandidate(_nationalId);
            }
     //   function getCandidateNumberOfVotes(string candidateIdNumber) public view returns(uint){
     //       candidate.getCandidateNumberOfVotes(candidateIdNumber);
@@ -237,7 +237,7 @@ contract MainContract  {
         judgment.addJudgmentInformation ( _address,judgmentInformationId, name, birthOfDate, password);
     }
     
-    function addCandidate(address _address,string candidateIdNumber , string name,string birthOfDate, string password,string city,string year,
+    function addCandidate(string candidateIdNumber , string name,string birthOfDate, string password,string city,string year,
     string phoneNumber,string campaign) public {
  
            candidate.addCandidate(candidateIdNumber,name,birthOfDate,password);
@@ -262,7 +262,7 @@ contract MainContract  {
     }
     
    
-     /*
+     
       function getStartTime ()   public view  returns(uint){
         return voters.getStartTime();
     }
@@ -277,12 +277,12 @@ contract MainContract  {
         
     }
     
-    */
+    
 
-   function getStartDate()public view returns(uint){
+  function getStartDate()public view returns(uint){
         return voters.getStartDate();
     }
-       function setStartDate (uint _startDate) public{
+      function setStartDate (uint _startDate) public{
         voters.setStartDate(_startDate);
     }
      function setStartTime(uint _startTime) public 
@@ -291,11 +291,13 @@ contract MainContract  {
     }
     function setEndTime(uint _endTime) public
     {
+        
+        
       voters.setEndTime(_endTime);
         
     }
 
- ////// period time and votes count
+ //// period time and votes count
     
     
     function getVotesCount () public view returns(uint){
@@ -303,7 +305,7 @@ contract MainContract  {
     }
     
      function updateVotesCount(uint _votesCount) public {
-       voters.updateVotesCount(_votesCount);
+      voters.updateVotesCount(_votesCount);
     }
    
    

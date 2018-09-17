@@ -21,26 +21,21 @@ contract Candidates
             string phoneNumber;
             string campaign;
       }
-      struct candidateTracking
-       {
-          
-          uint numberOfVotes;
-       }
+      mapping (string => uint) candidateTrackingMap;
        
        
        mapping (string => address) candidateIdToAddressMap;
        mapping (string =>candidateInformation ) candidateInformationMap;
        
        mapping (string=>candidateDetails) candidateDetailsMap;
-       mapping (string=>candidateTracking) candidateTrackingMap;
-       
+
        string [] arrayNationalID;
-       function deleteCandidate(string _nationalId,string nationalID)public
+       function deleteCandidate(string _nationalId)public
        {
            delete(candidateInformationMap[_nationalId]);
            delete(candidateDetailsMap[_nationalId]);
            delete(candidateTrackingMap[_nationalId]);
-           delete(candidateIdToAddressMap[nationalID]);
+        //   delete(candidateIdToAddressMap[_nationalId]);
 
        }
       
@@ -74,7 +69,7 @@ contract Candidates
     }
     
     function addCandidateTracking(string _nationalId,uint numberOfVotes) public{
-        candidateTrackingMap[_nationalId] = candidateTracking(numberOfVotes);
+        candidateTrackingMap[_nationalId] = numberOfVotes;
         
     }
     
@@ -83,7 +78,7 @@ contract Candidates
     
     
     function getCandidateVotesNumber(string _nationalId) public view returns(uint){
-        return candidateTrackingMap[_nationalId].numberOfVotes;
+        return candidateTrackingMap[_nationalId];
     }
     
     
@@ -114,9 +109,7 @@ contract Candidates
     
     
     
-      function getCandidateNumberOfVotes(string _nationalId) public view returns(uint){
-        return candidateTrackingMap[_nationalId].numberOfVotes;
-    }
+
     
     function getCandidatePassword(string _nationalId) public view returns(string){
          return candidateInformationMap[_nationalId].password;
