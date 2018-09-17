@@ -31,7 +31,7 @@ contract Voters
     struct votersVotes{
         address voterAddress;
       //  string voterIdNumber;
-        address candidateAddress;
+        string nationalId;
     }
     
    votersVotes[] votersVotesArray;
@@ -43,8 +43,14 @@ contract Voters
     mapping (address=>voterInfo) voterInfoMap;
     mapping (address => voterDetails) voterDetailsMap;
     mapping (address => votersVotes) votersVotesMap;
+    mapping (string => bytes32[]) CandidateVoters ;
     
      address [] arrayNationalID;
+     
+     uint votesCount;
+     uint startDate;
+     uint startTime;
+     uint endTime;
  
     function addVoterInfo(address _address,string voterIdNumber,string name,string birthOfDate,string password) public {
         arrayNationalID.push(_address);
@@ -56,9 +62,9 @@ contract Voters
     function addVoterDetails (address _address,string voterIdNumber,  string city,string year) public {
         voterDetailsMap[_address] = voterDetails(_address,voterIdNumber,city,year,0);
     }
-        function getVotedCandidatesAddress(address voterAddress,uint idex)public view returns (address)
+        function getVotedCandidatesAddress(address voterAddress,uint idex)public view returns (string)
     {
-        return mapVotersVotes[voterAddress][idex].candidateAddress;
+        return mapVotersVotes[voterAddress][idex].nationalId;
     }
     
     function getNationalIDArrayLength(address voterAddress) public view returns (uint)
@@ -66,27 +72,68 @@ contract Voters
         return mapVotersVotes[voterAddress].length;
     }
     
-    function grantYourVote(address voterAddress,address candidateAddress) public onlyVoter(voterAddress)
+    function grantYourVote(address voterAddress,string _candidateNationalId) public onlyVoter(voterAddress)
     {
-              mapVotersVotes[voterAddress].push(votersVotes(voterAddress,candidateAddress));
+              mapVotersVotes[voterAddress].push(votersVotes(voterAddress,_candidateNationalId));
               voterDetailsMap[voterAddress].numberOfVotes=voterDetailsMap[voterAddress].numberOfVotes+1;
+              CandidateVoters[_candidateNationalId].push(keccak256(voterAddress));
+              
   
     }
     
     //checkIfVoted
  
-    function addVoterVotes(address voterAddress,address candidateAddress) public view  returns (string) {
+    function addVoterVotes(address voterAddress,string _nationalId) public view  returns (string) {
         
         uint count=getNumberOfVotes(voterAddress);
-              if(count >= 5)
+              if(count >= votesCount)
                     return "You cant vote more than 5 candidates";
                 
              for (uint i = 0 ; i < count ; i++ ){
-            if(keccak256(abi.encodePacked(mapVotersVotes[voterAddress][i].candidateAddress)) == keccak256(abi.encodePacked(candidateAddress)))
+            if(keccak256(abi.encodePacked(mapVotersVotes[voterAddress][i].nationalId)) == keccak256(abi.encodePacked(_nationalId)))
                 return "You already voted to this candidate before";
         }
        //  grantYourVote(voterAddress,candidateAddress);
          return "Done";
+    }
+    
+    
+    function getVotesCount () public view returns(uint){
+        return votesCount;
+    }
+    
+    function updateVotesCount(uint _votesCount) public {
+        votesCount = _votesCount;
+    }
+    
+    function getStartDate()public view returns(uint){
+        return startDate ;
+    }
+    
+    
+    function setStartDate (uint _startDate) public{
+        _startDate=startDate;
+    }
+    
+    
+    
+    
+    function setStartTime(uint _startTime) public 
+    {
+        startTime=_startTime;
+    }
+    function setEndTime(uint _endTime) public
+    {
+        endTime=_endTime ;
+        
+    }
+    
+    function getStartTime ()   public view  returns(uint){
+        return startTime;
+    }
+    
+    function getEndTime ()   public view  returns(uint){
+        return endTime;
     }
     
  
@@ -97,11 +144,11 @@ contract Voters
          return   voterDetailsMap[_address].numberOfVotes;
    }
     
-    function revokeMyVote(address _voterAddress, address _candidateAddress) public onlyVoter(_voterAddress)
+    function revokeMyVote(address _voterAddress, string _nationalId) public onlyVoter(_voterAddress)
     {
         for(uint i=0;i<mapVotersVotes[_voterAddress].length;i++)
         {
-            if(mapVotersVotes[_voterAddress][i].candidateAddress==_candidateAddress)
+            if(keccak256(abi.encodePacked(mapVotersVotes[_voterAddress][i].nationalId))==keccak256(abi.encodePacked(_nationalId)))
             {
                  delete(mapVotersVotes[_voterAddress][i]);  
                 voterDetailsMap[_voterAddress].numberOfVotes=voterDetailsMap[_voterAddress].numberOfVotes-1;
@@ -169,7 +216,11 @@ return false;}
    }
    
    
+    ///// get candidate voters 
     
+    function getCandidateVoters(string _candidateNationalId) public view returns(bytes32[]){
+        return CandidateVoters[_candidateNationalId];
+    }
     
     
     

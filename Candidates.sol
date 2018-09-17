@@ -3,9 +3,9 @@ contract Candidates
 {
     
     string [] candidatesIds;
+
     struct candidateInformation
     {
-        address UserAddress;
          string candidateIdNumber;
          string name;
          string birthOfDate;
@@ -15,8 +15,7 @@ contract Candidates
      struct candidateDetails
       {
            
-           address UserAddress;
-           string candidateIdNumber;
+             string candidateIdNumber;
             string city;
             string year;
             string phoneNumber;
@@ -24,45 +23,44 @@ contract Candidates
       }
       struct candidateTracking
        {
-           address UserAddress;
-       //    string candidateIdNumber;
+          
           uint numberOfVotes;
        }
        
        
        mapping (string => address) candidateIdToAddressMap;
-       mapping (address =>candidateInformation ) candidateInformationMap;
+       mapping (string =>candidateInformation ) candidateInformationMap;
        
-       mapping (address=>candidateDetails) candidateDetailsMap;
-       mapping (address=>candidateTracking) candidateTrackingMap;
+       mapping (string=>candidateDetails) candidateDetailsMap;
+       mapping (string=>candidateTracking) candidateTrackingMap;
        
-       address [] arrayNationalID;
-       function deleteCandidate(address _address,string nationalID)public
+       string [] arrayNationalID;
+       function deleteCandidate(string _nationalId,string nationalID)public
        {
-           delete(candidateInformationMap[_address]);
-           delete(candidateDetailsMap[_address]);
-           delete(candidateTrackingMap[_address]);
+           delete(candidateInformationMap[_nationalId]);
+           delete(candidateDetailsMap[_nationalId]);
+           delete(candidateTrackingMap[_nationalId]);
            delete(candidateIdToAddressMap[nationalID]);
 
        }
       
-       function addCandidate(address _address,string candidateIdNumber , string name,string birthOfDate, string password) public {
+       function addCandidate(string candidateIdNumber , string name,string birthOfDate, string password)  {
         
-        arrayNationalID.push(_address);
-        candidateInformationMap[_address] = candidateInformation(_address,candidateIdNumber,name,birthOfDate,password);
-        candidateIdToAddressMap[candidateIdNumber] = _address;
+        arrayNationalID.push(candidateIdNumber);
+        candidateInformationMap[candidateIdNumber] = candidateInformation(candidateIdNumber,name,birthOfDate,password);
+      //  candidateIdToAddressMap[candidateIdNumber] = _address;
     //    candidatesIds.push(candidateIdNumber);
         
         
     }
-    function getCandidatePhonenumber(address _address) public view returns(string){
-        return candidateDetailsMap[_address].phoneNumber;
+    function getCandidatePhonenumber(string _nationalId) public view returns(string){
+        return candidateDetailsMap[_nationalId].phoneNumber;
     }
     
-     function getCandidateCampaign(address _address) public view returns(string){
-        return candidateDetailsMap[_address].campaign;
+     function getCandidateCampaign(string _nationalId) public view returns(string){
+        return candidateDetailsMap[_nationalId].campaign;
      }
-    function getNationalID(uint index)public view returns (address)
+    function getNationalID(uint index)public view returns (string)
     {
         return arrayNationalID[index];
     }
@@ -71,12 +69,12 @@ contract Candidates
     {
         return arrayNationalID.length;
     }
-    function addCandidateDetails(address _address,string candidateIdNumber,string city,string year,string phoneNumber,string campaign) public{
-        candidateDetailsMap[_address] = candidateDetails(_address,candidateIdNumber,city,year,phoneNumber,campaign);
+    function addCandidateDetails(string candidateIdNumber,string city,string year,string phoneNumber,string campaign) public{
+        candidateDetailsMap[candidateIdNumber] = candidateDetails(candidateIdNumber,city,year,phoneNumber,campaign);
     }
     
-    function addCandidateTracking(address _address,uint numberOfVotes) public{
-        candidateTrackingMap[_address] = candidateTracking(_address,numberOfVotes);
+    function addCandidateTracking(string _nationalId,uint numberOfVotes) public{
+        candidateTrackingMap[_nationalId] = candidateTracking(numberOfVotes);
         
     }
     
@@ -84,8 +82,8 @@ contract Candidates
     
     
     
-    function getCandidateVotesNumber(address _address) public view returns(uint){
-        return candidateTrackingMap[_address].numberOfVotes;
+    function getCandidateVotesNumber(string _nationalId) public view returns(uint){
+        return candidateTrackingMap[_nationalId].numberOfVotes;
     }
     
     
@@ -94,40 +92,40 @@ contract Candidates
     
     
     
-    function getCandidateName(address _address) public view returns(string){
-        return candidateInformationMap[_address].name;
+    function getCandidateName(string _nationalId) public view returns(string){
+        return candidateInformationMap[_nationalId].name;
     }
     
-    function getCandidatebirthOfDate(address _address) public view returns(string){
-        return candidateInformationMap[_address].birthOfDate;
-    }
-    
-    
-    
-   function getCandidateCity(address _address) public view returns(string){
-        return candidateDetailsMap[_address].city;
-    }
-    
-    
-      function getCandidateYear(address _address) public view returns(string){
-        return candidateDetailsMap[_address].year;
+    function getCandidatebirthOfDate(string _nationalId) public view returns(string){
+        return candidateInformationMap[_nationalId].birthOfDate;
     }
     
     
     
-    
-      function getCandidateNumberOfVotes(address _address) public view returns(uint){
-        return candidateTrackingMap[_address].numberOfVotes;
+   function getCandidateCity(string _nationalId) public view returns(string){
+        return candidateDetailsMap[_nationalId].city;
     }
     
-    function getCandidatePassword(address _address) public view returns(string){
-         return candidateInformationMap[_address].password;
+    
+      function getCandidateYear(string _nationalId) public view returns(string){
+        return candidateDetailsMap[_nationalId].year;
+    }
+    
+    
+    
+    
+      function getCandidateNumberOfVotes(string _nationalId) public view returns(uint){
+        return candidateTrackingMap[_nationalId].numberOfVotes;
+    }
+    
+    function getCandidatePassword(string _nationalId) public view returns(string){
+         return candidateInformationMap[_nationalId].password;
     } 
     
     
-    function checkIdAndPassword(address _address,string password) public view returns (bool)
+    function checkIdAndPassword(string _nationalId,string password) public view returns (bool)
     {
-        if( keccak256(abi.encodePacked(candidateInformationMap[_address].password))== keccak256(abi.encodePacked(password)))
+        if( keccak256(abi.encodePacked(candidateInformationMap[_nationalId].password))== keccak256(abi.encodePacked(password)))
         {
             return true;
         }
@@ -141,9 +139,9 @@ contract Candidates
         return candidateIdToAddressMap[nationalId];
     }
     
-    function getCandidateNationalId(address _address) public view returns(string){
+    function getCandidateNationalId(string _nationalId) public view returns(string){
         
-        return candidateInformationMap[_address].candidateIdNumber; 
+        return candidateInformationMap[_nationalId].candidateIdNumber; 
         
     }
     
