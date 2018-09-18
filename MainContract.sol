@@ -253,7 +253,7 @@ contract MainContract  {
  
     }
     
-     function getCandidateAddressByNationalId(string nationalId) public view returns(address){
+     function getCandidateAddressByNationalId(string nationalId) public view returns(bool){
         return candidate.getCandidateAddressByNationalId(nationalId);
     }
     

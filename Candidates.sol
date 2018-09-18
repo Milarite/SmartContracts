@@ -24,7 +24,7 @@ contract Candidates
       mapping (string => uint) candidateTrackingMap;
        
        
-       mapping (string => address) candidateIdToAddressMap;
+       mapping (string => bool) candidateIdExist;
        mapping (string =>candidateInformation ) candidateInformationMap;
        
        mapping (string=>candidateDetails) candidateDetailsMap;
@@ -43,7 +43,7 @@ contract Candidates
         
         arrayNationalID.push(candidateIdNumber);
         candidateInformationMap[candidateIdNumber] = candidateInformation(candidateIdNumber,name,birthOfDate,password);
-      //  candidateIdToAddressMap[candidateIdNumber] = _address;
+        candidateIdExist[candidateIdNumber] = true;
     //    candidatesIds.push(candidateIdNumber);
         
         
@@ -128,8 +128,8 @@ contract Candidates
  
     //////// end of getter
     
-    function getCandidateAddressByNationalId(string nationalId) public view returns(address){
-        return candidateIdToAddressMap[nationalId];
+    function getCandidateAddressByNationalId(string nationalId) public view returns(bool){
+        return candidateIdExist[nationalId];
     }
     
     function getCandidateNationalId(string _nationalId) public view returns(string){
