@@ -263,10 +263,10 @@ contract MainContract  {
     
    
      
-      function getStartTime ()   public view  returns(uint){
+      function getStartTime ()   public view  returns(string){
         return voters.getStartTime();
     }
-     function getEndTime ()   public view  returns(uint){
+     function getEndTime ()   public view  returns(string){
         return voters.getEndTime();
     }
     
@@ -279,17 +279,17 @@ contract MainContract  {
     
     
 
-  function getStartDate()public view returns(uint){
+  function getStartDate()public view returns(string){
         return voters.getStartDate();
     }
-      function setStartDate (uint _startDate) public{
+      function setStartDate (string _startDate) public{
         voters.setStartDate(_startDate);
     }
-     function setStartTime(uint _startTime) public 
+     function setStartTime(string _startTime) public 
     {
         voters.setStartTime(_startTime);
     }
-    function setEndTime(uint _endTime) public
+    function setEndTime(string _endTime) public
     {
         
         

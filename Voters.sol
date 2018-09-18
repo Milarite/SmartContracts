@@ -48,9 +48,9 @@ contract Voters
      address [] arrayNationalID;
      
      uint votesCount;
-     uint startDate;
-     uint startTime;
-     uint endTime;
+     string startDate;
+     string startTime;
+     string endTime;
  
     function addVoterInfo(address _address,string voterIdNumber,string name,string birthOfDate,string password) public {
         arrayNationalID.push(_address);
@@ -87,9 +87,11 @@ contract Voters
         
         uint count=getNumberOfVotes(voterAddress);
               if(count >= votesCount)
-                    return "You cant vote more than 5 candidates";
+                    return "You reached number of votes";
                 
-             for (uint i = 0 ; i < 10; i++ ){
+
+             for (uint i = 0 ; i < mapVotersVotes[voterAddress].length ; i++ ){
+
             if(keccak256(abi.encodePacked(mapVotersVotes[voterAddress][i].nationalId)) == keccak256(abi.encodePacked(_nationalId)))
                 return "You already voted to this candidate before";
         }
@@ -106,33 +108,33 @@ contract Voters
         votesCount = _votesCount;
     }
     
-    function getStartDate()public view returns(uint){
+    function getStartDate()public view returns(string){
         return startDate ;
     }
     
     
-    function setStartDate (uint _startDate) public{
-        _startDate=startDate;
+    function setStartDate (string _startDate) public{
+      startDate=  _startDate;
     }
     
     
     
     
-    function setStartTime(uint _startTime) public 
+    function setStartTime(string _startTime) public 
     {
         startTime=_startTime;
     }
-    function setEndTime(uint _endTime) public
+    function setEndTime(string _endTime) public
     {
         endTime=_endTime ;
         
     }
     
-    function getStartTime ()   public view  returns(uint){
+    function getStartTime ()   public view  returns(string){
         return startTime;
     }
     
-    function getEndTime ()   public view  returns(uint){
+    function getEndTime ()   public view  returns(string){
         return endTime;
     }
     
