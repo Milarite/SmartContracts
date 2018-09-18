@@ -89,7 +89,9 @@ contract Voters
               if(count >= votesCount)
                     return "You reached number of votes";
                 
+
              for (uint i = 0 ; i < mapVotersVotes[voterAddress].length ; i++ ){
+
             if(keccak256(abi.encodePacked(mapVotersVotes[voterAddress][i].nationalId)) == keccak256(abi.encodePacked(_nationalId)))
                 return "You already voted to this candidate before";
         }
