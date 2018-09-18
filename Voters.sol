@@ -89,7 +89,7 @@ contract Voters
               if(count >= votesCount)
                     return "You cant vote more than 5 candidates";
                 
-             for (uint i = 0 ; i < count ; i++ ){
+             for (uint i = 0 ; i < 10; i++ ){
             if(keccak256(abi.encodePacked(mapVotersVotes[voterAddress][i].nationalId)) == keccak256(abi.encodePacked(_nationalId)))
                 return "You already voted to this candidate before";
         }
