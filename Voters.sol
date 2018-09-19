@@ -33,7 +33,7 @@ contract Voters
       //  string voterIdNumber;
         string nationalId;
     }
-    
+   
    votersVotes[] votersVotesArray;
    //voterInfo [] arrayVoterInfo;
    
@@ -43,7 +43,7 @@ contract Voters
     mapping (address=>voterInfo) voterInfoMap;
     mapping (address => voterDetails) voterDetailsMap;
     mapping (address => votersVotes) votersVotesMap;
-    mapping (string => bytes32[]) CandidateVoters ;
+    mapping (string => address[]) CandidateVoters ;
     
      address [] arrayNationalID;
      
@@ -76,8 +76,9 @@ contract Voters
     {
               mapVotersVotes[voterAddress].push(votersVotes(voterAddress,_candidateNationalId));
               voterDetailsMap[voterAddress].numberOfVotes=voterDetailsMap[voterAddress].numberOfVotes+1;
-              CandidateVoters[_candidateNationalId].push(keccak256(voterAddress));
               
+              
+              CandidateVoters[_candidateNationalId].push(voterAddress);
   
     }
     
@@ -156,12 +157,13 @@ contract Voters
                 voterDetailsMap[_voterAddress].numberOfVotes=voterDetailsMap[_voterAddress].numberOfVotes-1;
                  for(uint j=0; j < CandidateVoters[_nationalId].length;j++)
         {
-            if(keccak256(abi.encodePacked(CandidateVoters[_nationalId][j])) == keccak256(abi.encodePacked(_voterAddress))){
+            if(_voterAddress == CandidateVoters[_nationalId][j]){
                 
                 CandidateVoters[_nationalId][j]=0;
                 break;
                 
             }
+            
         }
                  break;
             }
@@ -170,6 +172,8 @@ contract Voters
         
        
     }
+    
+    
     
     function deleteVoterDetail(address _address) public{
         delete (voterDetailsMap[_address]);
@@ -230,7 +234,7 @@ return false;}
    
     ///// get candidate voters 
     
-    function getCandidateVoters(string _candidateNationalId) public view returns(bytes32[]){
+    function getCandidateVoters(string _candidateNationalId) public view returns(address[]){
         return CandidateVoters[_candidateNationalId];
     }
     

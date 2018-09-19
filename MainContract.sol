@@ -270,7 +270,7 @@ contract MainContract  {
         return voters.getEndTime();
     }
     
-    function getCandidateVoters (string _candidateNationalId) public view returns(bytes32[]){
+    function getCandidateVoters (string _candidateNationalId) public view returns(address[]){
         
         return voters.getCandidateVoters(_candidateNationalId);
         
