@@ -158,7 +158,7 @@ contract Voters
         {
             if(keccak256(abi.encodePacked(CandidateVoters[_nationalId][j])) == keccak256(abi.encodePacked(_voterAddress))){
                 
-                delete(CandidateVoters[_nationalId][j]);
+                CandidateVoters[_nationalId][j]=0;
                 break;
                 
             }
