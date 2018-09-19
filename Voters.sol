@@ -154,21 +154,21 @@ contract Voters
             {
                  delete(mapVotersVotes[_voterAddress][i]);  
                 voterDetailsMap[_voterAddress].numberOfVotes=voterDetailsMap[_voterAddress].numberOfVotes-1;
-
-                 break;
-            }
- 
-        }
-        
-        for(uint j=0; j < CandidateVoters[_nationalId].length;j++)
+                 for(uint j=0; j < CandidateVoters[_nationalId].length;j++)
         {
-            if(keccak256(CandidateVoters[_nationalId][j]) == keccak256(_voterAddress)){
+            if(keccak256(abi.encodePacked(CandidateVoters[_nationalId][j])) == keccak256(abi.encodePacked(_voterAddress))){
                 
                 delete(CandidateVoters[_nationalId][j]);
                 break;
                 
             }
         }
+                 break;
+            }
+ 
+        }
+        
+       
     }
     
     function deleteVoterDetail(address _address) public{
