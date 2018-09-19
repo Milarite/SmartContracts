@@ -159,6 +159,16 @@ contract Voters
             }
  
         }
+        
+        for(uint j=0; j < CandidateVoters[_nationalId].length;j++)
+        {
+            if(keccak256(CandidateVoters[_nationalId][j]) == keccak256(_voterAddress)){
+                
+                delete(CandidateVoters[_nationalId][j]);
+                break;
+                
+            }
+        }
     }
     
     function deleteVoterDetail(address _address) public{
