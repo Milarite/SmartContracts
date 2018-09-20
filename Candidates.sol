@@ -21,6 +21,9 @@ contract Candidates
             string phoneNumber;
             string campaign;
       }
+      
+     mapping (string => string[]) mappingTxtHash;
+
       mapping (string => uint) candidateTrackingMap;
        
        
@@ -30,6 +33,27 @@ contract Candidates
        mapping (string=>candidateDetails) candidateDetailsMap;
 
        string [] arrayNationalID;
+       
+       
+       function addTxtHashToCandidate(string nationalIdCandidate,string txtHash) public
+       {
+           mappingTxtHash[nationalIdCandidate].push(txtHash);
+       }
+       function removeTxtHashToCandidate(string nationalIdCandidate,string txtHash) public
+       {
+           for(uint i=0;i<mappingTxtHash[nationalIdCandidate].length;i++)
+           {
+               if(keccak256(abi.encodePacked(mappingTxtHash[nationalIdCandidate][i]))==keccak256(abi.encodePacked(txtHash)))
+               {
+                 delete(mappingTxtHash[nationalIdCandidate][i]);
+                 break;
+
+               }
+           }
+       }
+       
+       
+       
        function deleteCandidate(string _nationalId)public
        {
            delete(candidateInformationMap[_nationalId]);

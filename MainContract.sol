@@ -141,8 +141,21 @@ contract MainContract  {
             {
                      voters.grantYourVote(_voterAddress,_candidateNationalId);
                      candidate.addCandidateTracking(_candidateNationalId,candidate.getCandidateVotesNumber(_candidateNationalId) + 1);//get last candidate votes and add 1
+                     
 
             }
+            
+            
+                   function addTxtHashToCandidate(string nationalIdCandidate,string txtHash) public
+                   {
+                       candidate.addTxtHashToCandidate(nationalIdCandidate,txtHash);
+                   }
+                       function removeTxtHashToCandidate(string nationalIdCandidate,string txtHash) public
+                          {
+                              candidate.removeTxtHashToCandidate(nationalIdCandidate,txtHash);
+                          }
+
+            
         function revokeMyVote(address _voterAddress, string _candidateNationalId) public
         {
             voters.revokeMyVote(_voterAddress,_candidateNationalId);
