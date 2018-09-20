@@ -22,7 +22,7 @@ contract Candidates
             string campaign;
       }
       
-     mapping (string => string[]) mappingTxtHash;
+     mapping (string => address[]) mappingTxtHash;
 
       mapping (string => uint) candidateTrackingMap;
        
@@ -34,12 +34,16 @@ contract Candidates
 
        string [] arrayNationalID;
        
+       function getTxtHash(string nationalId)public view returns (address[])
+       {
+           return mappingTxtHash[nationalId];
+       }
        
-       function addTxtHashToCandidate(string nationalIdCandidate,string txtHash) public
+       function addTxtHashToCandidate(string nationalIdCandidate,address txtHash) public
        {
            mappingTxtHash[nationalIdCandidate].push(txtHash);
        }
-       function removeTxtHashToCandidate(string nationalIdCandidate,string txtHash) public
+       function removeTxtHashToCandidate(string nationalIdCandidate,address txtHash) public
        {
            for(uint i=0;i<mappingTxtHash[nationalIdCandidate].length;i++)
            {

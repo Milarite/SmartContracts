@@ -96,6 +96,23 @@ contract MainContract  {
            {
                candidate.deleteCandidate(_nationalId);
            }
+           
+           
+            
+                   function addTxtHashToCandidate(string nationalIdCandidate,address txtHash) public
+                   {
+                       candidate.addTxtHashToCandidate(nationalIdCandidate,txtHash);
+                   }
+                       function removeTxtHashToCandidate(string nationalIdCandidate,address txtHash) public
+                          {
+                              candidate.removeTxtHashToCandidate(nationalIdCandidate,txtHash);
+                          }
+                          
+                          
+                          function getTxtHash(string nationalId)public view returns (address[])
+                          {
+                              return candidate.getTxtHash(nationalId);
+                          }
     //   function getCandidateNumberOfVotes(string candidateIdNumber) public view returns(uint){
     //       candidate.getCandidateNumberOfVotes(candidateIdNumber);
     // }
@@ -145,15 +162,7 @@ contract MainContract  {
 
             }
             
-            
-                   function addTxtHashToCandidate(string nationalIdCandidate,string txtHash) public
-                   {
-                       candidate.addTxtHashToCandidate(nationalIdCandidate,txtHash);
-                   }
-                       function removeTxtHashToCandidate(string nationalIdCandidate,string txtHash) public
-                          {
-                              candidate.removeTxtHashToCandidate(nationalIdCandidate,txtHash);
-                          }
+           
 
             
         function revokeMyVote(address _voterAddress, string _candidateNationalId) public
