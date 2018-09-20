@@ -94,7 +94,7 @@ contract MainContract  {
            
            
            ////////////////////// 
-                   function addTxtHashToCandidate(string nationalIdCandidate,address txtHash) public
+                   function addTxtHashToCandidate(string nationalIdCandidate,string txtHash) public
                    {
                        candidate.addTxtHashToCandidate(nationalIdCandidate,txtHash);
                    }
@@ -104,7 +104,7 @@ contract MainContract  {
                           }
                           
                           
-                          function getTxtHash(string nationalId,uint index)public view returns (address)
+                          function getTxtHash(string nationalId,uint index)public view returns (string)
                           {
                               return candidate.getTxtHash(nationalId,index);
                           }
@@ -142,7 +142,7 @@ contract MainContract  {
     
     
     ///////////////////
-    function addTxtHashVoter(address voterAddress,address _txtHash,string _nationalId) public
+    function addTxtHashVoter(address voterAddress,string _txtHash,string _nationalId) public
     {
         
         voters.addTxtHashVoter(voterAddress,_txtHash,_nationalId);
@@ -154,7 +154,7 @@ contract MainContract  {
     
     
     //////////
-          function getVotedCandidatesTxtHash(address voterAddress,uint idex)public view returns (address)
+          function getVotedCandidatesTxtHash(address voterAddress,uint idex)public view returns (string)
           {
               return voters.getVotedCandidatesTxtHash(voterAddress,idex);
               

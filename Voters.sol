@@ -32,7 +32,7 @@ contract Voters
         address voterAddress;
       //  string voterIdNumber;
         string nationalId;
-        address txtHash;
+        string txtHash;
     }
    
    votersVotes[] votersVotesArray;
@@ -70,7 +70,7 @@ contract Voters
     
     ////////////////
     
-        function getVotedCandidatesTxtHash(address voterAddress,uint idex)public view returns (address)
+        function getVotedCandidatesTxtHash(address voterAddress,uint idex)public view returns (string)
     {
         return mapVotersVotes[voterAddress][idex].txtHash;
     }
@@ -82,10 +82,10 @@ contract Voters
         return mapVotersVotes[voterAddress].length;
     }
     
-    function grantYourVote(address voterAddress,string _candidateNationalId) public onlyVoter(voterAddress)
+    function grantYourVote(address voterAddress,string _candidateNationalId) public
     {
         ////////////////////
-              mapVotersVotes[voterAddress].push(votersVotes(voterAddress,_candidateNationalId,0x2));
+              mapVotersVotes[voterAddress].push(votersVotes(voterAddress,_candidateNationalId,""));
               ///////////////
               voterDetailsMap[voterAddress].numberOfVotes=voterDetailsMap[voterAddress].numberOfVotes+1;
               CandidateVoters[_candidateNationalId].push(voterAddress);
@@ -93,7 +93,7 @@ contract Voters
     }
     ///////////////
     
-    function addTxtHashVoter(address voterAddress,address _txtHash,string _nationalId) public
+    function addTxtHashVoter(address voterAddress,string _txtHash,string _nationalId) public
     {
         for(uint i=0;i<mapVotersVotes[voterAddress].length;i++)
         {
@@ -171,7 +171,7 @@ contract Voters
          return   voterDetailsMap[_address].numberOfVotes;
    }
     
-    function revokeMyVote(address _voterAddress, string _nationalId) public onlyVoter(_voterAddress)
+    function revokeMyVote(address _voterAddress, string _nationalId) public 
     {
         for(uint i=0;i<mapVotersVotes[_voterAddress].length;i++)
         {

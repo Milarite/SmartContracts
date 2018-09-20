@@ -25,7 +25,7 @@ contract Candidates
       struct candidateTxtHashStatus
       {
            string candidateIdNumber;
-           address txtHash;
+           string txtHash;
            int flag;
           
       }
@@ -51,7 +51,7 @@ contract Candidates
            return mappingcandidateTxtHashStatus[candidateIdNumber].length;
        }
        
-       function getTxtHash(string nationalId,uint index)public view returns (address)
+       function getTxtHash(string nationalId,uint index)public view returns (string)
        {
            return mappingcandidateTxtHashStatus[nationalId][index].txtHash;
        }
@@ -61,7 +61,7 @@ contract Candidates
            return mappingcandidateTxtHashStatus[nationalId][index].flag;
        }
        
-       function addTxtHashToCandidate(string nationalIdCandidate,address txtHash) public
+       function addTxtHashToCandidate(string nationalIdCandidate,string txtHash) public
        {
            mappingcandidateTxtHashStatus[nationalIdCandidate].push(candidateTxtHashStatus(nationalIdCandidate,txtHash,1));
        }
