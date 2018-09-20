@@ -142,10 +142,10 @@ contract MainContract  {
     
     
     ///////////////////
-      function addTxtHashVoter(address voterAddress,address _txtHash,uint index) public
+    function addTxtHashVoter(address voterAddress,address _txtHash,string _nationalId) public
     {
         
-        voters.addTxtHashVoter(voterAddress,_txtHash,index);
+        voters.addTxtHashVoter(voterAddress,_txtHash,_nationalId);
     }
     ////////////////
     

@@ -93,9 +93,17 @@ contract Voters
     }
     ///////////////
     
-    function addTxtHashVoter(address voterAddress,address _txtHash,uint index) public
+    function addTxtHashVoter(address voterAddress,address _txtHash,string _nationalId) public
     {
-        mapVotersVotes[voterAddress][index].txtHash=_txtHash;
+        for(uint i=0;i<mapVotersVotes[voterAddress].length;i++)
+        {
+            if(keccak256(abi.encodePacked(mapVotersVotes[voterAddress][i].nationalId))==keccak256(abi.encodePacked( _nationalId)))
+            {
+                        mapVotersVotes[voterAddress][i].txtHash=_txtHash;
+                        break;
+
+            }
+        }
     }
     ///////////////
     //checkIfVoted
