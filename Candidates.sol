@@ -22,7 +22,17 @@ contract Candidates
             string campaign;
       }
       
-     mapping (string => address[]) mappingTxtHash;
+      struct candidateTxtHashStatus
+      {
+           string candidateIdNumber;
+           address txtHash;
+           int flag;
+          
+      }
+      
+      /////////////
+     mapping (string => candidateTxtHashStatus[]) mappingcandidateTxtHashStatus;
+     ///////////////
 
       mapping (string => uint) candidateTrackingMap;
        
@@ -34,27 +44,41 @@ contract Candidates
 
        string [] arrayNationalID;
        
-       function getTxtHash(string nationalId)public view returns (address[])
+       ////////////
+       
+       function getCandidateTxtHashStatusLength(string candidateIdNumber)public view returns (uint)
        {
-           return mappingTxtHash[nationalId];
+           return mappingcandidateTxtHashStatus[candidateIdNumber].length;
+       }
+       
+       function getTxtHash(string nationalId,uint index)public view returns (address)
+       {
+           return mappingcandidateTxtHashStatus[nationalId][index].txtHash;
+       }
+       
+         function getTxtHashFlag(string nationalId,uint index)public view returns (int)
+       {
+           return mappingcandidateTxtHashStatus[nationalId][index].flag;
        }
        
        function addTxtHashToCandidate(string nationalIdCandidate,address txtHash) public
        {
-           mappingTxtHash[nationalIdCandidate].push(txtHash);
+           mappingcandidateTxtHashStatus[nationalIdCandidate].push(candidateTxtHashStatus(nationalIdCandidate,txtHash,1));
        }
        function removeTxtHashToCandidate(string nationalIdCandidate,address txtHash) public
        {
-           for(uint i=0;i<mappingTxtHash[nationalIdCandidate].length;i++)
+           for(uint i=0;i<mappingcandidateTxtHashStatus[nationalIdCandidate].length;i++)
            {
-               if(keccak256(abi.encodePacked(mappingTxtHash[nationalIdCandidate][i]))==keccak256(abi.encodePacked(txtHash)))
+               if(keccak256(abi.encodePacked(mappingcandidateTxtHashStatus[nationalIdCandidate][i].txtHash))==keccak256(abi.encodePacked(txtHash)))
                {
-                 delete(mappingTxtHash[nationalIdCandidate][i]);
+                 
+                 mappingcandidateTxtHashStatus[nationalIdCandidate][i].flag=-1;
                  break;
 
                }
            }
        }
+       //////////////////////
        
        
        

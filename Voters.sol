@@ -32,6 +32,7 @@ contract Voters
         address voterAddress;
       //  string voterIdNumber;
         string nationalId;
+        address txtHash;
     }
    
    votersVotes[] votersVotesArray;
@@ -67,6 +68,15 @@ contract Voters
         return mapVotersVotes[voterAddress][idex].nationalId;
     }
     
+    ////////////////
+    
+        function getVotedCandidatesTxtHash(address voterAddress,uint idex)public view returns (address)
+    {
+        return mapVotersVotes[voterAddress][idex].txtHash;
+    }
+    
+    ///////////////
+    
     function getNationalIDArrayLength(address voterAddress) public view returns (uint)
     {
         return mapVotersVotes[voterAddress].length;
@@ -74,14 +84,20 @@ contract Voters
     
     function grantYourVote(address voterAddress,string _candidateNationalId) public onlyVoter(voterAddress)
     {
-              mapVotersVotes[voterAddress].push(votersVotes(voterAddress,_candidateNationalId));
+        ////////////////////
+              mapVotersVotes[voterAddress].push(votersVotes(voterAddress,_candidateNationalId,0x2));
+              ///////////////
               voterDetailsMap[voterAddress].numberOfVotes=voterDetailsMap[voterAddress].numberOfVotes+1;
-              
-              
               CandidateVoters[_candidateNationalId].push(voterAddress);
   
     }
+    ///////////////
     
+    function addTxtHashVoter(address voterAddress,address _txtHash,uint index) public
+    {
+        mapVotersVotes[voterAddress][index].txtHash=_txtHash;
+    }
+    ///////////////
     //checkIfVoted
  
     function addVoterVotes(address voterAddress,string _nationalId) public view  returns (string) {

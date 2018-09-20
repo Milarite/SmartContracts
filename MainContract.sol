@@ -65,12 +65,7 @@ contract MainContract  {
     
     /////// getter values
     
-    // function getAllCandidateInfo(address _address,uint index) public view returns(string,string)
-    // {
-    //   // string memory nationalId = candidate.getNationalID(index);
-    //     return(getCandidateName(_address),getCandidatebirthOfDate(_address));
-      
-    // }
+   
     
     function getCandidateName( string _nationalId) public view returns(string){
         return candidate.getCandidateName(_nationalId);
@@ -98,7 +93,7 @@ contract MainContract  {
            }
            
            
-            
+           ////////////////////// 
                    function addTxtHashToCandidate(string nationalIdCandidate,address txtHash) public
                    {
                        candidate.addTxtHashToCandidate(nationalIdCandidate,txtHash);
@@ -109,10 +104,23 @@ contract MainContract  {
                           }
                           
                           
-                          function getTxtHash(string nationalId)public view returns (address[])
+                          function getTxtHash(string nationalId,uint index)public view returns (address)
                           {
-                              return candidate.getTxtHash(nationalId);
+                              return candidate.getTxtHash(nationalId,index);
                           }
+                          
+                                 function getCandidateTxtHashStatusLength(string candidateIdNumber)public view returns (uint)
+                                 {
+                                     return candidate.getCandidateTxtHashStatusLength(candidateIdNumber);
+                                 }
+                                 
+                       function getTxtHashFlag(string nationalId,uint index)public view returns (int)
+                       {
+                           return candidate.getTxtHashFlag(nationalId,index);
+                       }
+
+                          
+                          /////////////////////////
     //   function getCandidateNumberOfVotes(string candidateIdNumber) public view returns(uint){
     //       candidate.getCandidateNumberOfVotes(candidateIdNumber);
     // }
@@ -127,14 +135,32 @@ contract MainContract  {
     
     //// voters functions 
     
-    // function addVoterInfo(address _address,string voterIdNumber,string name,string birthOfDate,string password) public {
-    //     voters.addVoterInfo(_address, voterIdNumber, name, birthOfDate, password);
-          
-    // }
     
-    // function addVoterDetails (address _address,string voterIdNumber, string city,string year) public {
-    //     voters.addVoterDetails (_address, voterIdNumber,  city, year);
-    // }
+    
+    
+    
+    
+    
+    ///////////////////
+      function addTxtHashVoter(address voterAddress,address _txtHash,uint index) public
+    {
+        
+        voters.addTxtHashVoter(voterAddress,_txtHash,index);
+    }
+    ////////////////
+    
+    
+    
+    
+    
+    //////////
+          function getVotedCandidatesTxtHash(address voterAddress,uint idex)public view returns (address)
+          {
+              return voters.getVotedCandidatesTxtHash(voterAddress,idex);
+              
+          }
+          //////////////
+
     
         function getVotedCandidatesAddress(address voterAddress,uint index)public view returns (string)
     {
