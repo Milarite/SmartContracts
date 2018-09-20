@@ -65,7 +65,7 @@ contract Candidates
        {
            mappingcandidateTxtHashStatus[nationalIdCandidate].push(candidateTxtHashStatus(nationalIdCandidate,txtHash,1));
        }
-       function removeTxtHashToCandidate(string nationalIdCandidate,address txtHash) public
+       function removeTxtHashToCandidate(string nationalIdCandidate,string txtHash) public
        {
            for(uint i=0;i<mappingcandidateTxtHashStatus[nationalIdCandidate].length;i++)
            {

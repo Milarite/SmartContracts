@@ -98,7 +98,7 @@ contract MainContract  {
                    {
                        candidate.addTxtHashToCandidate(nationalIdCandidate,txtHash);
                    }
-                       function removeTxtHashToCandidate(string nationalIdCandidate,address txtHash) public
+                       function removeTxtHashToCandidate(string nationalIdCandidate,string txtHash) public
                           {
                               candidate.removeTxtHashToCandidate(nationalIdCandidate,txtHash);
                           }
