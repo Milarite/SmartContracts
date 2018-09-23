@@ -52,6 +52,7 @@ contract Voters
      string startDate;
      string period;
      string endTime;
+      uint public NumberOfVoters;
  
     function addVoterInfo(address _address,string voterIdNumber,string name,string birthOfDate,string password) public {
         arrayNationalID.push(_address);
@@ -243,6 +244,7 @@ contract Voters
      addVoterInfo(_address,nationalID, name, birthOfDate, password);
      addVoterDetails (_address,nationalID,city, year);
      singInMap[nationalID]=_address;
+     NumberOfVoters++;
    }
    function checkNationalID(string nationalID) public view returns (bool)
    {
@@ -261,6 +263,14 @@ return false;}
     function getCandidateVoters(string _candidateNationalId) public view returns(address[]){
         return CandidateVoters[_candidateNationalId];
     }
+    
+    
+    
+    function getNumberOfVoters()public view returns(uint){
+        return NumberOfVoters;
+    }
+    
+    
     
     
     

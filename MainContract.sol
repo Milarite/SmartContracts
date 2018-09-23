@@ -20,7 +20,8 @@ contract MainContract  {
     
 
     
-    uint public ElectionStartTime  ;
+    uint public ElectionStartTime;
+    string public PercentageOfVoters;
  
     
     ///// candidate Functions
@@ -366,7 +367,27 @@ function getCurrentTime() public view returns (uint)
    
 function startElection() public {
     ElectionStartTime = now;
+                                }
+                                
+                                
+function getNumberOfVoters ()public view returns (uint){
+    return voters.getNumberOfVoters();
 }
+
+function setPercentageOfVoters(string _percentage) public {
+    PercentageOfVoters = _percentage;
+}
+
+function getPercentageOfVoters() public view returns(string){
+    return PercentageOfVoters;
+}
+
+function getElectionStartTime() public view returns(uint){
+    return ElectionStartTime;
+}
+                                
+                                
+                                
 
 
 
