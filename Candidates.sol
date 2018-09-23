@@ -4,6 +4,7 @@ contract Candidates
     
     string [] candidatesIds;
 
+
     struct candidateInformation
     {
          string candidateIdNumber;
@@ -96,6 +97,7 @@ contract Candidates
         arrayNationalID.push(candidateIdNumber);
         candidateInformationMap[candidateIdNumber] = candidateInformation(candidateIdNumber,name,birthOfDate,password);
         candidateIdExist[candidateIdNumber] = true;
+       
     //    candidatesIds.push(candidateIdNumber);
         
         
@@ -189,6 +191,36 @@ contract Candidates
         return candidateInformationMap[_nationalId].candidateIdNumber; 
         
     }
+    
+    
+    function winnerCandidate() public view returns (string) {
+      
+       string memory national_id=arrayNationalID[0];
+       uint max = candidateTrackingMap[national_id];
+       for (uint i =1 ; i< arrayNationalID.length ; i ++)
+       {
+          
+         
+           if(candidateTrackingMap[arrayNationalID[i]] > max)
+           {
+               max = candidateTrackingMap[arrayNationalID[i]];
+               national_id = arrayNationalID[i];
+           }
+           
+       }
+       
+       return national_id;
+        
+    }
+    
+    
+
+
+
+    
+    
+    
+    
     
     
     

@@ -50,7 +50,7 @@ contract Voters
      
      uint votesCount;
      string startDate;
-     string startTime;
+     string period;
      string endTime;
  
     function addVoterInfo(address _address,string voterIdNumber,string name,string birthOfDate,string password) public {
@@ -145,9 +145,9 @@ contract Voters
     
     
     
-    function setStartTime(string _startTime) public 
+    function setPeriod(string _period) public 
     {
-        startTime=_startTime;
+        period=_period;
     }
     function setEndTime(string _endTime) public
     {
@@ -155,8 +155,8 @@ contract Voters
         
     }
     
-    function getStartTime ()   public view  returns(string){
-        return startTime;
+    function getPeriod ()   public view  returns(string){
+        return period;
     }
     
     function getEndTime ()   public view  returns(string){

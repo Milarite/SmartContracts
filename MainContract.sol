@@ -20,7 +20,7 @@ contract MainContract  {
     
 
     
-    
+    uint public ElectionStartTime  ;
  
     
     ///// candidate Functions
@@ -125,7 +125,9 @@ contract MainContract  {
     //       candidate.getCandidateNumberOfVotes(candidateIdNumber);
     // }
     
-    
+    function winnerCandidate() public view returns(string){
+        return candidate.winnerCandidate();
+    }
  
     //////// end of getter
     
@@ -311,8 +313,8 @@ contract MainContract  {
     
    
      
-      function getStartTime ()   public view  returns(string){
-        return voters.getStartTime();
+      function getPeriod ()   public view  returns(string){
+        return voters.getPeriod();
     }
      function getEndTime ()   public view  returns(string){
         return voters.getEndTime();
@@ -333,9 +335,9 @@ contract MainContract  {
       function setStartDate (string _startDate) public{
         voters.setStartDate(_startDate);
     }
-     function setStartTime(string _startTime) public 
+     function setPeriod(string _startTime) public 
     {
-        voters.setStartTime(_startTime);
+        voters.setPeriod(_startTime);
     }
     function setEndTime(string _endTime) public
     {
@@ -355,7 +357,20 @@ contract MainContract  {
      function updateVotesCount(uint _votesCount) public {
       voters.updateVotesCount(_votesCount);
     }
+    
+function getCurrentTime() public view returns (uint)
+{
+    return now;
+}
    
+   
+function startElection() public {
+    ElectionStartTime = now;
+}
+
+
+
+
    
     
     
