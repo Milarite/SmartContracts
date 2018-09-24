@@ -273,6 +273,11 @@ contract MainContract  {
          {
              return voters.checkIdAndPassword(nationalID,password);
          }
+         
+           function getTotalVotes() public view returns (uint)
+    {
+         return voters.getTotalVotes();
+    }
  
     
  /////////////////////////////////////////////////////////////////////////
