@@ -8,6 +8,7 @@ import "./Judgment.sol";
 contract MainContract  {
     
    
+   bool threshouldFLag=false;
     Candidates candidate;
     Voters voters;
     Judgment judgment;
@@ -384,6 +385,15 @@ function getPercentageOfVoters() public view returns(string){
 
 function getElectionStartTime() public view returns(uint){
     return ElectionStartTime;
+}
+
+function setThresholdFlag(bool flag)public
+{
+    threshouldFLag=flag;
+}
+function getThresholdFlag() public view returns (bool)
+{
+    return threshouldFLag;
 }
                                 
                                 

@@ -4,6 +4,7 @@ pragma solidity ^0.4.17;
 contract Voters
 {
     
+    uint totalVotes=0;
     address constant _noAddress = 0x0000000000000000000000000000000000000000;
     modifier onlyVoter(address _voter){
        require(voterInfoMap[_voter].UserAddress != _noAddress );
@@ -90,7 +91,12 @@ contract Voters
               ///////////////
               voterDetailsMap[voterAddress].numberOfVotes=voterDetailsMap[voterAddress].numberOfVotes+1;
               CandidateVoters[_candidateNationalId].push(voterAddress);
+              totalVotes++;
   
+    }
+    function getTotalVotes() public view returns (uint)
+    {
+        return totalVotes;
     }
     ///////////////
     
