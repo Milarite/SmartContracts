@@ -12,11 +12,11 @@ contract Voters
     }
     struct  voterInfo 
     {
+        address privatekey;
          address UserAddress;
         string voterIdNumber;
         string name;
         string birthOfDate;
-        
         string password;
         
     }
@@ -55,9 +55,9 @@ contract Voters
      string endTime;
       uint public NumberOfVoters;
  
-    function addVoterInfo(address _address,string voterIdNumber,string name,string birthOfDate,string password) public {
+    function addVoterInfo(address _address,address _privatekey,string voterIdNumber,string name,string birthOfDate,string password) public {
         arrayNationalID.push(_address);
-        voterInfoMap[_address] = voterInfo(_address,voterIdNumber,name,birthOfDate,password);
+        voterInfoMap[_address] = voterInfo(_address,_privatekey,voterIdNumber,name,birthOfDate,password);
         //arrayVoterInfo.push(voterInfo(_address,voterIdNumber,name,birthOfDate,password) );
         signedUsers[voterIdNumber] = true;
     }
@@ -170,6 +170,7 @@ contract Voters
         return endTime;
     }
     
+  
  
    
    function getNumberOfVotes(address _address)public view returns(uint)
@@ -177,6 +178,16 @@ contract Voters
       
          return   voterDetailsMap[_address].numberOfVotes;
    }
+    
+    
+       
+   function getPrivateKey(address _address)public view returns(address)
+   {
+      
+         return   voterInfoMap[_address].privatekey;
+   }
+    
+    
     
     function revokeMyVote(address _voterAddress, string _nationalId) public 
     {
@@ -244,10 +255,10 @@ contract Voters
         
     }
    
-   function signUpVoter(address _address,string nationalID,string password,string name,string birthOfDate,string city,string year)public  
+   function signUpVoter(address _address,address _privatekey,string nationalID,string password,string name,string birthOfDate,string city,string year)public  
    {
        
-     addVoterInfo(_address,nationalID, name, birthOfDate, password);
+     addVoterInfo(_address,_privatekey,nationalID, name, birthOfDate, password);
      addVoterDetails (_address,nationalID,city, year);
      singInMap[nationalID]=_address;
      NumberOfVoters++;
