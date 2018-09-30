@@ -262,7 +262,7 @@ contract MainContract  {
     //////////////////////////////////////////////////////////////
     
     
-      function getPrivateKey(address _address)public view returns(address)
+      function getPrivateKey(address _address)public view returns(string)
    {
       
          return   voters.getPrivateKey(_address);
@@ -273,7 +273,7 @@ contract MainContract  {
        return   voters.checkNationalID(nationalID);
       }
        
-   function signUpVoter(address _address,address _privatekey,string nationalID,string password,string name,string birthOfDate,string city,string year)  
+   function signUpVoter(address _address,string _privatekey,string nationalID,string password,string name,string birthOfDate,string city,string year)  
           public  
           {
               voters.signUpVoter(_address,_privatekey,nationalID,password,name,birthOfDate,city,year);

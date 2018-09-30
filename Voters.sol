@@ -12,8 +12,8 @@ contract Voters
     }
     struct  voterInfo 
     {
-        address privatekey;
-         address UserAddress;
+        address UserAddress;
+        string privatekey;
         string voterIdNumber;
         string name;
         string birthOfDate;
@@ -55,7 +55,7 @@ contract Voters
      string endTime;
       uint public NumberOfVoters;
  
-    function addVoterInfo(address _address,address _privatekey,string voterIdNumber,string name,string birthOfDate,string password) public {
+    function addVoterInfo(address _address,string _privatekey,string voterIdNumber,string name,string birthOfDate,string password) public {
         arrayNationalID.push(_address);
         voterInfoMap[_address] = voterInfo(_address,_privatekey,voterIdNumber,name,birthOfDate,password);
         //arrayVoterInfo.push(voterInfo(_address,voterIdNumber,name,birthOfDate,password) );
@@ -181,7 +181,7 @@ contract Voters
     
     
        
-   function getPrivateKey(address _address)public view returns(address)
+   function getPrivateKey(address _address)public view returns(string)
    {
       
          return   voterInfoMap[_address].privatekey;
@@ -255,7 +255,7 @@ contract Voters
         
     }
    
-   function signUpVoter(address _address,address _privatekey,string nationalID,string password,string name,string birthOfDate,string city,string year)public  
+   function signUpVoter(address _address,string _privatekey,string nationalID,string password,string name,string birthOfDate,string city,string year)public  
    {
        
      addVoterInfo(_address,_privatekey,nationalID, name, birthOfDate, password);
