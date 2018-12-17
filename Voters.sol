@@ -1,10 +1,17 @@
+<<<<<<< HEAD
 pragma solidity ^0.5.0;
+=======
+pragma solidity ^0.4.17;
+>>>>>>> 404443d4954bdaeb2cb680d96c9b1abee488d434
  
  
 contract Voters
 {
     
+<<<<<<< HEAD
     address def ;
+=======
+>>>>>>> 404443d4954bdaeb2cb680d96c9b1abee488d434
     uint totalVotes=0;
     address constant _noAddress = 0x0000000000000000000000000000000000000000;
     modifier onlyVoter(address _voter){
@@ -56,7 +63,11 @@ contract Voters
      string endTime;
       uint public NumberOfVoters;
  
+<<<<<<< HEAD
     function addVoterInfo(address _address,  string memory _privatekey, string memory voterIdNumber, string memory name, string memory birthOfDate, string memory password) public {
+=======
+    function addVoterInfo(address _address,string _privatekey,string voterIdNumber,string name,string birthOfDate,string password) public {
+>>>>>>> 404443d4954bdaeb2cb680d96c9b1abee488d434
         arrayNationalID.push(_address);
         voterInfoMap[_address] = voterInfo(_address,_privatekey,voterIdNumber,name,birthOfDate,password);
         //arrayVoterInfo.push(voterInfo(_address,voterIdNumber,name,birthOfDate,password) );
@@ -73,7 +84,11 @@ contract Voters
     
     ////////////////
     
+<<<<<<< HEAD
         function getVotedCandidatesTxtHash(address voterAddress,uint idex)public view returns (string memory)
+=======
+        function getVotedCandidatesTxtHash(address voterAddress,uint idex)public view returns (string)
+>>>>>>> 404443d4954bdaeb2cb680d96c9b1abee488d434
     {
         return mapVotersVotes[voterAddress][idex].txtHash;
     }
@@ -85,7 +100,11 @@ contract Voters
         return mapVotersVotes[voterAddress].length;
     }
     
+<<<<<<< HEAD
     function grantYourVote(address voterAddress,string memory  _candidateNationalId) public
+=======
+    function grantYourVote(address voterAddress,string _candidateNationalId) public
+>>>>>>> 404443d4954bdaeb2cb680d96c9b1abee488d434
     {
         ////////////////////
               mapVotersVotes[voterAddress].push(votersVotes(voterAddress,_candidateNationalId,""));
@@ -101,7 +120,11 @@ contract Voters
     }
     ///////////////
     
+<<<<<<< HEAD
     function addTxtHashVoter(address voterAddress,string memory _txtHash,string memory _nationalId) public
+=======
+    function addTxtHashVoter(address voterAddress,string _txtHash,string _nationalId) public
+>>>>>>> 404443d4954bdaeb2cb680d96c9b1abee488d434
     {
         for(uint i=0;i<mapVotersVotes[voterAddress].length;i++)
         {
@@ -141,33 +164,57 @@ contract Voters
         votesCount = _votesCount;
     }
     
+<<<<<<< HEAD
     function getStartDate()public view returns(string memory){
+=======
+    function getStartDate()public view returns(string){
+>>>>>>> 404443d4954bdaeb2cb680d96c9b1abee488d434
         return startDate ;
     }
     
     
+<<<<<<< HEAD
     function setStartDate (string memory _startDate) public{
+=======
+    function setStartDate (string _startDate) public{
+>>>>>>> 404443d4954bdaeb2cb680d96c9b1abee488d434
       startDate=  _startDate;
     }
     
     
     
     
+<<<<<<< HEAD
     function setPeriod(string  memory _period) public 
     {
         period=_period;
     }
     function setEndTime(string memory _endTime) public
+=======
+    function setPeriod(string _period) public 
+    {
+        period=_period;
+    }
+    function setEndTime(string _endTime) public
+>>>>>>> 404443d4954bdaeb2cb680d96c9b1abee488d434
     {
         endTime=_endTime ;
         
     }
     
+<<<<<<< HEAD
     function getPeriod ()   public view  returns(string memory){
         return period;
     }
     
     function getEndTime ()   public view  returns(string memory){
+=======
+    function getPeriod ()   public view  returns(string){
+        return period;
+    }
+    
+    function getEndTime ()   public view  returns(string){
+>>>>>>> 404443d4954bdaeb2cb680d96c9b1abee488d434
         return endTime;
     }
     
@@ -182,13 +229,49 @@ contract Voters
     
     
        
+<<<<<<< HEAD
    function getPrivateKey(address _address)public view returns(string memory)
+=======
+   function getPrivateKey(address _address)public view returns(string)
+>>>>>>> 404443d4954bdaeb2cb680d96c9b1abee488d434
    {
       
          return   voterInfoMap[_address].privatekey;
    }
     
+<<<<<<< HEAD
 
+=======
+    
+    
+    function revokeMyVote(address _voterAddress, string _nationalId) public 
+    {
+        for(uint i=0;i<mapVotersVotes[_voterAddress].length;i++)
+        {
+            if(keccak256(abi.encodePacked(mapVotersVotes[_voterAddress][i].nationalId))==keccak256(abi.encodePacked(_nationalId)))
+            {
+                 delete(mapVotersVotes[_voterAddress][i]);  
+                voterDetailsMap[_voterAddress].numberOfVotes=voterDetailsMap[_voterAddress].numberOfVotes-1;
+                 for(uint j=0; j < CandidateVoters[_nationalId].length;j++)
+        {
+            if(_voterAddress == CandidateVoters[_nationalId][j]){
+                
+                CandidateVoters[_nationalId][j]=0;
+                break;
+                
+            }
+            
+        }
+                 break;
+            }
+ 
+        }
+        
+       
+    }
+>>>>>>> 404443d4954bdaeb2cb680d96c9b1abee488d434
+    
+    
     
     function deleteVoterDetail(address _address) public{
         delete (voterDetailsMap[_address]);
@@ -228,7 +311,11 @@ contract Voters
         
     }
    
+<<<<<<< HEAD
    function signUpVoter(address _address,string memory _privatekey,string memory nationalID,string memory password,string memory name,string memory birthOfDate,string memory city,string memory year)public  
+=======
+   function signUpVoter(address _address,string _privatekey,string nationalID,string password,string name,string birthOfDate,string city,string year)public  
+>>>>>>> 404443d4954bdaeb2cb680d96c9b1abee488d434
    {
        
      addVoterInfo(_address,_privatekey,nationalID, name, birthOfDate, password);
@@ -250,6 +337,7 @@ return false;}
    
     ///// get candidate voters 
     
+<<<<<<< HEAD
     // function getCandidateVoters(string memory _candidateNationalId) public view returns( address[]){
     //     return CandidateVoters[_candidateNationalId];
     // }
@@ -258,7 +346,19 @@ return false;}
     
     function getNumberOfVoters()public view returns(uint){
         return NumberOfVoters;
+=======
+    function getCandidateVoters(string _candidateNationalId) public view returns(address[]){
+        return CandidateVoters[_candidateNationalId];
+>>>>>>> 404443d4954bdaeb2cb680d96c9b1abee488d434
     }
+    
+    
+    
+    function getNumberOfVoters()public view returns(uint){
+        return NumberOfVoters;
+    }
+    
+    
     
     
     
