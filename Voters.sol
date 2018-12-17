@@ -1,369 +1,233 @@
-<<<<<<< HEAD
-pragma solidity ^0.5.0;
-=======
-pragma solidity ^0.4.17;
->>>>>>> 404443d4954bdaeb2cb680d96c9b1abee488d434
- 
- 
-contract Voters
+pragma solidity ^0.5.1;
+contract Candidates
 {
     
-<<<<<<< HEAD
-    address def ;
-=======
->>>>>>> 404443d4954bdaeb2cb680d96c9b1abee488d434
-    uint totalVotes=0;
-    address constant _noAddress = 0x0000000000000000000000000000000000000000;
-    modifier onlyVoter(address _voter){
-       require(voterInfoMap[_voter].UserAddress != _noAddress );
-       _;
-    }
-    struct  voterInfo 
-    {
-        address UserAddress;
-        string privatekey;
-        string voterIdNumber;
-        string name;
-        string birthOfDate;
-        string password;
-        
-    }
-    struct voterDetails
-    {
-        address UserAddress;
-        string voterIdNumber;
-        string city;
-        string year;
-        uint numberOfVotes;
-    }
-    
-    struct votersVotes{
-        address voterAddress;
-      //  string voterIdNumber;
-        string nationalId;
-        string txtHash;
-    }
-   
-   votersVotes[] votersVotesArray;
-   //voterInfo [] arrayVoterInfo;
-   
-    mapping(address => votersVotes[]) mapVotersVotes;
-    mapping (string =>address) singInMap;
-    mapping (string => bool)signedUsers ;
-    mapping (address=>voterInfo) voterInfoMap;
-    mapping (address => voterDetails) voterDetailsMap;
-    mapping (address => votersVotes) votersVotesMap;
-    mapping (string => address[]) CandidateVoters ;
-    
-     address [] arrayNationalID;
-     
-     uint votesCount;
-     string startDate;
-     string period;
-     string endTime;
-      uint public NumberOfVoters;
- 
-<<<<<<< HEAD
-    function addVoterInfo(address _address,  string memory _privatekey, string memory voterIdNumber, string memory name, string memory birthOfDate, string memory password) public {
-=======
-    function addVoterInfo(address _address,string _privatekey,string voterIdNumber,string name,string birthOfDate,string password) public {
->>>>>>> 404443d4954bdaeb2cb680d96c9b1abee488d434
-        arrayNationalID.push(_address);
-        voterInfoMap[_address] = voterInfo(_address,_privatekey,voterIdNumber,name,birthOfDate,password);
-        //arrayVoterInfo.push(voterInfo(_address,voterIdNumber,name,birthOfDate,password) );
-        signedUsers[voterIdNumber] = true;
-    }
-    
-    function addVoterDetails (address _address,string memory voterIdNumber,  string memory city,string memory year) public {
-        voterDetailsMap[_address] = voterDetails(_address,voterIdNumber,city,year,0);
-    }
-        function getVotedCandidatesAddress(address  voterAddress,uint  idex)public view returns (string memory)
-    {
-        return mapVotersVotes[voterAddress][idex].nationalId;
-    }
-    
-    ////////////////
-    
-<<<<<<< HEAD
-        function getVotedCandidatesTxtHash(address voterAddress,uint idex)public view returns (string memory)
-=======
-        function getVotedCandidatesTxtHash(address voterAddress,uint idex)public view returns (string)
->>>>>>> 404443d4954bdaeb2cb680d96c9b1abee488d434
-    {
-        return mapVotersVotes[voterAddress][idex].txtHash;
-    }
-    
-    ///////////////
-    
-    function getNationalIDArrayLength(address voterAddress) public view returns (uint)
-    {
-        return mapVotersVotes[voterAddress].length;
-    }
-    
-<<<<<<< HEAD
-    function grantYourVote(address voterAddress,string memory  _candidateNationalId) public
-=======
-    function grantYourVote(address voterAddress,string _candidateNationalId) public
->>>>>>> 404443d4954bdaeb2cb680d96c9b1abee488d434
-    {
-        ////////////////////
-              mapVotersVotes[voterAddress].push(votersVotes(voterAddress,_candidateNationalId,""));
-              ///////////////
-              voterDetailsMap[voterAddress].numberOfVotes=voterDetailsMap[voterAddress].numberOfVotes+1;
-              CandidateVoters[_candidateNationalId].push(voterAddress);
-              totalVotes++;
-  
-    }
-    function getTotalVotes() public view returns (uint)
-    {
-        return totalVotes;
-    }
-    ///////////////
-    
-<<<<<<< HEAD
-    function addTxtHashVoter(address voterAddress,string memory _txtHash,string memory _nationalId) public
-=======
-    function addTxtHashVoter(address voterAddress,string _txtHash,string _nationalId) public
->>>>>>> 404443d4954bdaeb2cb680d96c9b1abee488d434
-    {
-        for(uint i=0;i<mapVotersVotes[voterAddress].length;i++)
-        {
-            if(keccak256(abi.encodePacked(mapVotersVotes[voterAddress][i].nationalId))==keccak256(abi.encodePacked( _nationalId)))
-            {
-                        mapVotersVotes[voterAddress][i].txtHash=_txtHash;
-                        break;
+    string [] candidatesIds;
 
-            }
-        }
-    }
-    ///////////////
-    //checkIfVoted
- 
-    function addVoterVotes(address voterAddress,string memory _nationalId) public view  returns (string memory) {
-        
-        uint count=getNumberOfVotes(voterAddress);
-              if(count >= votesCount)
-                    return "You reached number of votes";
-                
 
-             for (uint i = 0 ; i < mapVotersVotes[voterAddress].length ; i++ ){
-
-            if(keccak256(abi.encodePacked(mapVotersVotes[voterAddress][i].nationalId)) == keccak256(abi.encodePacked(_nationalId)))
-                return "You already voted to this candidate before";
-        }
-       //  grantYourVote(voterAddress,candidateAddress);
-         return "Done";
-    }
-    
-    
-    function getVotesCount () public view returns(uint){
-        return votesCount;
-    }
-    
-    function updateVotesCount(uint _votesCount) public {
-        votesCount = _votesCount;
-    }
-    
-<<<<<<< HEAD
-    function getStartDate()public view returns(string memory){
-=======
-    function getStartDate()public view returns(string){
->>>>>>> 404443d4954bdaeb2cb680d96c9b1abee488d434
-        return startDate ;
-    }
-    
-    
-<<<<<<< HEAD
-    function setStartDate (string memory _startDate) public{
-=======
-    function setStartDate (string _startDate) public{
->>>>>>> 404443d4954bdaeb2cb680d96c9b1abee488d434
-      startDate=  _startDate;
-    }
-    
-    
-    
-    
-<<<<<<< HEAD
-    function setPeriod(string  memory _period) public 
+    struct candidateInformation
     {
-        period=_period;
-    }
-    function setEndTime(string memory _endTime) public
-=======
-    function setPeriod(string _period) public 
-    {
-        period=_period;
-    }
-    function setEndTime(string _endTime) public
->>>>>>> 404443d4954bdaeb2cb680d96c9b1abee488d434
-    {
-        endTime=_endTime ;
-        
-    }
-    
-<<<<<<< HEAD
-    function getPeriod ()   public view  returns(string memory){
-        return period;
-    }
-    
-    function getEndTime ()   public view  returns(string memory){
-=======
-    function getPeriod ()   public view  returns(string){
-        return period;
-    }
-    
-    function getEndTime ()   public view  returns(string){
->>>>>>> 404443d4954bdaeb2cb680d96c9b1abee488d434
-        return endTime;
-    }
-    
-  
+         string candidateIdNumber;
+         string name;
+         string birthOfDate;
+         string password;
  
-   
-   function getNumberOfVotes(address _address)public view returns(uint)
-   {
+    }
+     struct candidateDetails
+      {
+           
+             string candidateIdNumber;
+            string city;
+            string year;
+            string phoneNumber;
+            string campaign;
+      }
       
-         return   voterDetailsMap[_address].numberOfVotes;
-   }
-    
-    
+      struct candidateTxtHashStatus
+      {
+           string candidateIdNumber;
+           string txtHash;
+           int flag;
+          
+      }
+      
+      /////////////
+     mapping (string => candidateTxtHashStatus[]) mappingcandidateTxtHashStatus;
+     ///////////////
+
+      mapping (string => uint) candidateTrackingMap;
        
-<<<<<<< HEAD
-   function getPrivateKey(address _address)public view returns(string memory)
-=======
-   function getPrivateKey(address _address)public view returns(string)
->>>>>>> 404443d4954bdaeb2cb680d96c9b1abee488d434
-   {
-      
-         return   voterInfoMap[_address].privatekey;
-   }
-    
-<<<<<<< HEAD
+       
+       mapping (string => bool) candidateIdExist;
+       mapping (string =>candidateInformation ) candidateInformationMap;
+       
+       mapping (string=>candidateDetails) candidateDetailsMap;
 
-=======
-    
-    
-    function revokeMyVote(address _voterAddress, string _nationalId) public 
-    {
-        for(uint i=0;i<mapVotersVotes[_voterAddress].length;i++)
-        {
-            if(keccak256(abi.encodePacked(mapVotersVotes[_voterAddress][i].nationalId))==keccak256(abi.encodePacked(_nationalId)))
-            {
-                 delete(mapVotersVotes[_voterAddress][i]);  
-                voterDetailsMap[_voterAddress].numberOfVotes=voterDetailsMap[_voterAddress].numberOfVotes-1;
-                 for(uint j=0; j < CandidateVoters[_nationalId].length;j++)
-        {
-            if(_voterAddress == CandidateVoters[_nationalId][j]){
-                
-                CandidateVoters[_nationalId][j]=0;
-                break;
-                
-            }
-            
-        }
+       string [] arrayNationalID;
+       
+       ////////////
+       
+       function getCandidateTxtHashStatusLength(string memory candidateIdNumber)public view returns (uint)
+       {
+           return mappingcandidateTxtHashStatus[candidateIdNumber].length;
+       }
+       
+       function getTxtHash(string memory nationalId,uint index)public view returns (string memory)
+       {
+           return mappingcandidateTxtHashStatus[nationalId][index].txtHash;
+       }
+       
+         function getTxtHashFlag(string memory nationalId,uint index)public view returns (int)
+       {
+           return mappingcandidateTxtHashStatus[nationalId][index].flag;
+       }
+       
+       function addTxtHashToCandidate(string memory nationalIdCandidate,string memory txtHash) public
+       {
+           mappingcandidateTxtHashStatus[nationalIdCandidate].push(candidateTxtHashStatus(nationalIdCandidate,txtHash,1));
+       }
+       function removeTxtHashToCandidate(string memory nationalIdCandidate,string memory txtHash) public
+       {
+           for(uint i=0;i<mappingcandidateTxtHashStatus[nationalIdCandidate].length;i++)
+           {
+               if(keccak256(abi.encodePacked(mappingcandidateTxtHashStatus[nationalIdCandidate][i].txtHash))==keccak256(abi.encodePacked(txtHash)))
+               {
+                 
+                 mappingcandidateTxtHashStatus[nationalIdCandidate][i].flag=-1;
                  break;
-            }
- 
-        }
-        
+
+               }
+           }
+       }
+       //////////////////////
        
-    }
->>>>>>> 404443d4954bdaeb2cb680d96c9b1abee488d434
-    
-    
-    
-    function deleteVoterDetail(address _address) public{
-        delete (voterDetailsMap[_address]);
-    }
-    
-    // function getCandidateByVoterDetails(address _address)public view  returns(string)  {
-    //     return votersVotesMap[_address].candidateIdNumber;
-    // }
-    
-    
-     function getVoterCity(address _address) public view returns(string memory){
-        return voterDetailsMap[_address].city;
-    }
-    
-    
-      function getVoterYear(address _address) public view returns(string memory){
-        return voterDetailsMap[_address].year;
-    }
-    
-    function getVoterName(address _address)  public view returns(string memory) {
-        return voterInfoMap[_address].name;
-    }
-    
-    function getVoterDateOfBirth (address _address)public view returns(string memory){
-        return voterInfoMap[_address].birthOfDate;
-    }
-    
-     function checkIdAndPassword(string memory nationalID,string memory password) public view returns (address)
-    {
+       
+       
+       function deleteCandidate(string memory _nationalId)public
+       {
+           delete(candidateInformationMap[_nationalId]);
+           delete(candidateDetailsMap[_nationalId]);
+           delete(candidateTrackingMap[_nationalId]);
+        //   delete(candidateIdToAddressMap[_nationalId]);
+
+       }
+      
+       function addCandidate(string memory  candidateIdNumber , string memory name,string memory birthOfDate, string memory  password) public {
         
-        if( keccak256(abi.encodePacked(voterInfoMap[singInMap[nationalID]].password))== keccak256(abi.encodePacked(password)))
+        arrayNationalID.push(candidateIdNumber);
+        candidateInformationMap[candidateIdNumber] = candidateInformation(candidateIdNumber,name,birthOfDate,password);
+        candidateIdExist[candidateIdNumber] = true;
+       
+    //    candidatesIds.push(candidateIdNumber);
+        
+        
+    }
+    function getCandidatePhonenumber(string memory _nationalId) public view returns(string memory){
+        return candidateDetailsMap[_nationalId].phoneNumber;
+    }
+    
+     function getCandidateCampaign(string memory _nationalId) public view returns(string memory){
+        return candidateDetailsMap[_nationalId].campaign;
+     }
+    function getNationalID(uint index)public view returns (string memory)
+    {
+        return arrayNationalID[index];
+    }
+    
+    function getNationalIDArrayLength() public view returns (uint)
+    {
+        return arrayNationalID.length;
+    }
+    function addCandidateDetails(string memory candidateIdNumber,string memory city,string memory year,string memory phoneNumber,string memory campaign) public{
+        candidateDetailsMap[candidateIdNumber] = candidateDetails(candidateIdNumber,city,year,phoneNumber,campaign);
+    }
+    
+    function addCandidateTracking(string memory _nationalId,uint numberOfVotes) public{
+        candidateTrackingMap[_nationalId] = numberOfVotes;
+        
+    }
+    
+    
+    
+    
+    
+    function getCandidateVotesNumber(string memory _nationalId) public view returns(uint){
+        return candidateTrackingMap[_nationalId];
+    }
+    
+    
+    
+    /////// getter values
+    
+    
+    
+    function getCandidateName(string memory _nationalId) public view returns(string memory){
+        return candidateInformationMap[_nationalId].name;
+    }
+    
+    function getCandidatebirthOfDate(string memory _nationalId) public view returns(string memory){
+        return candidateInformationMap[_nationalId].birthOfDate;
+    }
+    
+    
+    
+   function getCandidateCity(string memory _nationalId) public view returns(string memory){
+        return candidateDetailsMap[_nationalId].city;
+    }
+    
+    
+      function getCandidateYear(string memory _nationalId) public view returns(string memory){
+        return candidateDetailsMap[_nationalId].year;
+    }
+    
+    
+    
+    
+
+    
+    function getCandidatePassword(string memory _nationalId) public view returns(string memory){
+         return candidateInformationMap[_nationalId].password;
+    } 
+    
+    
+    function checkIdAndPassword(string memory _nationalId,string memory password) public view returns (bool)
+    {
+        if( keccak256(abi.encodePacked(candidateInformationMap[_nationalId].password))== keccak256(abi.encodePacked(password)))
         {
-            return voterInfoMap[singInMap[nationalID]].UserAddress;
+            return true;
         }
         else
-        return def;
+        return false;
+    }
+ 
+    //////// end of getter
+    
+    function getCandidateAddressByNationalId(string memory nationalId) public view returns(bool){
+        return candidateIdExist[nationalId];
+    }
+    
+    function getCandidateNationalId(string memory _nationalId) public view returns(string memory){
+        
+        return candidateInformationMap[_nationalId].candidateIdNumber; 
         
     }
-   
-<<<<<<< HEAD
-   function signUpVoter(address _address,string memory _privatekey,string memory nationalID,string memory password,string memory name,string memory birthOfDate,string memory city,string memory year)public  
-=======
-   function signUpVoter(address _address,string _privatekey,string nationalID,string password,string name,string birthOfDate,string city,string year)public  
->>>>>>> 404443d4954bdaeb2cb680d96c9b1abee488d434
-   {
+    
+    
+    function winnerCandidate() public view returns (string memory) {
+      
+       string memory national_id=arrayNationalID[0];
+       uint max = candidateTrackingMap[national_id];
+       for (uint i =1 ; i< arrayNationalID.length ; i ++)
+       {
+          
+         
+           if(candidateTrackingMap[arrayNationalID[i]] > max)
+           {
+               max = candidateTrackingMap[arrayNationalID[i]];
+               national_id = arrayNationalID[i];
+           }
+           
+       }
        
-     addVoterInfo(_address,_privatekey,nationalID, name, birthOfDate, password);
-     addVoterDetails (_address,nationalID,city, year);
-     singInMap[nationalID]=_address;
-     NumberOfVoters++;
-   }
-   function checkNationalID(string memory nationalID) public view returns (bool)
-   {
+       return national_id;
+        
+    }
+    
+    
+
+
+
+    
+    
+    
+    
+    
+    
+    
+    
  
-if(signedUsers[nationalID]==true)
-     {
-return true;}
-else
-{
-return false;}
-   }
-   
-   
-    ///// get candidate voters 
-    
-<<<<<<< HEAD
-    // function getCandidateVoters(string memory _candidateNationalId) public view returns( address[]){
-    //     return CandidateVoters[_candidateNationalId];
-    // }
-    
-    
-    
-    function getNumberOfVoters()public view returns(uint){
-        return NumberOfVoters;
-=======
-    function getCandidateVoters(string _candidateNationalId) public view returns(address[]){
-        return CandidateVoters[_candidateNationalId];
->>>>>>> 404443d4954bdaeb2cb680d96c9b1abee488d434
-    }
-    
-    
-    
-    function getNumberOfVoters()public view returns(uint){
-        return NumberOfVoters;
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
+       
+      
+       
+  
 }
