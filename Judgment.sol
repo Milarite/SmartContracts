@@ -1,4 +1,4 @@
-pragma solidity ^0.4.17;
+pragma solidity ^0.5.1;
 contract Judgment
 {
     
@@ -16,13 +16,13 @@ contract Judgment
     }
     
     mapping (address=>judgmentInformation) judgmentInformationMap;
-    function addJudgmentInformation (address _address,string judgmentInformationId,string name,string birthOfDate,string password) public {
+    function addJudgmentInformation (address _address,string memory judgmentInformationId,string memory name,string memory birthOfDate,string memory password) public {
         
         judgmentInformationMap[_address] = judgmentInformation(_address,judgmentInformationId,name,birthOfDate,password);
     }
     
     
-   function checkIdAndPassword(address _address,string password) public view returns (bool)
+   function checkIdAndPassword(address _address,string memory password) public view returns (bool)
     {
         if( keccak256(abi.encodePacked(judgmentInformationMap[_address].password))== keccak256(abi.encodePacked(password)))
         {
